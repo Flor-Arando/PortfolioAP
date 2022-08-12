@@ -1,7 +1,5 @@
 package com.grupo.backend.Controller;
 
-import java.util.Optional;
-
 //import java.time.LocalDate;
 
 import com.grupo.backend.Model.Persona;
@@ -33,6 +31,7 @@ public class PersonaController {
 		return yo;
 	}
 
+    @CrossOrigin(origins = "*")
 	@GetMapping(path="/personas")
 	public @ResponseBody Iterable<Persona> getPersonas() {
 		return this.personaRepository.findAll(); // esto lo provee springboot (o hibernate)

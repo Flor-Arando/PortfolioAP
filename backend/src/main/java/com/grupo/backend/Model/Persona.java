@@ -1,9 +1,9 @@
 package com.grupo.backend.Model;
 
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-//import java.time.LocalDate;
 //import java.time.format.DateTimeFormatter;
 
 @Entity
@@ -14,6 +14,13 @@ public class Persona {
     private String clave;
     private String nombre;
     private String apellido;
+    private String titulo;
+    private String descripcion;
+    private String correo;
+    private String direccion;
+    private LocalDate fechaNacimiento;
+    private String fotoPerfil;
+
     //private LocalDate nacimiento;
 
     /*public Persona(int id, String usuario, String clave, String nombre, String apellido//, LocalDate nacimiento/)
@@ -64,6 +71,54 @@ public class Persona {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 
     /*public String getNacimiento() {
