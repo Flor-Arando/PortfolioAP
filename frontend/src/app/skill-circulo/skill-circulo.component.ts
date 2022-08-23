@@ -11,7 +11,7 @@ export class SkillCirculoComponent implements OnInit {
   barra : string;
 
   constructor() {
-    this.nivel = 40;
+    this.nivel = 40; //DANI COMO AGREGO MIS PORCENTAJES DE MYSQL PARA VERLOS?
     this.barra = this.nivel + " " + (100 - this.nivel);
     console.log(this.barra);
   }

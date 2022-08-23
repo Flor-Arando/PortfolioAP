@@ -146,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-block;
   line-height: 0px;
   transition: 0.3s;
-  font-size: 16px;
+  font-size: 20px;
 }
 .header-social-links a:hover {
   color: #34b7a7;
@@ -435,7 +435,7 @@ section {
 }
 
 .section-bg {
-  background-color: #e7f8f6;
+  background-color: #f8e7f8;
 }
 
 .section-title {
@@ -449,6 +449,7 @@ section {
   margin-bottom: 20px;
   padding-bottom: 20px;
   position: relative;
+  padding-top: 50px;
 }
 .section-title h2::after {
   content: "";
@@ -570,7 +571,7 @@ section {
 /* circulo de habilidades-------------------------------------
 ------------------------------------------------------------*/
 
-svg { width: 150px; bbbbackground: teal; }
+svg { width: 150px; background: rgb(252, 252, 252); }
 svg-progress-circle[percent="100"] path { stroke: green }
 
 /*--------------------------------------------------------------

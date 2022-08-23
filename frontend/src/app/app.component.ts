@@ -23,18 +23,23 @@ import { CommonModule } from '@angular/common'; // Para el ngFor
 export class AppComponent implements OnInit { // OnInit es para ejecutar algo automaticamente despues del constructor
   seccion : string;
   persona : any;
-  skills : any[]
+  skills : any[];
+  proyecto: string
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
     this.seccion = "sobre_mi"; // inicio, sobre_mi, educacion, portfolio, experiencia
     this.skills = [];
+    this.proyecto = "";
+    //this.experiencia = " ";
+    //this.educacion = "";
   }
   
   // OnInit es para ejecutar algo automaticamente despues del constructor
   ngOnInit() {
       this.cargarPersona();
       this.cargarSkills();
+      this.cargarProyecto();
   }
 
   /////////////////////////////////////////// Metodos propios
@@ -49,7 +54,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
           this.persona = resultado;
         }/*,
         error => this.error = error*/
-      );
+      )  
   }
 
   cargarSkills() {
@@ -58,6 +63,14 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
           this.skills = resultado;
         }
       );
+  }
+
+  cargarProyecto() {
+    this.http.get<any>("http://localhost:8080/proyecto/list").subscribe(
+        resultado => {
+            this.proyecto =resultado;
+        }
+    );
   }
 
 }

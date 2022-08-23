@@ -23,7 +23,7 @@ public class PersonaController {
 	private PersonaRepository personaRepository;
 
 	@CrossOrigin(origins = "*") // o http://localhost:4200
-	@GetMapping(path="/persona-frontend")
+	@GetMapping(path="/persona-frontend") //si anda
 	public @ResponseBody /*Optional<*/Persona/*>*/ getPersonaX(/*@RequestParam(value = "name", defaultValue = "World") String name*/) {
 		/*Optional<*/Persona/*>*/ yo = this.personaRepository.findById(1).orElse(new Persona()); // esto lo provee springboot (o hibernate)
 		yo.setClave("");

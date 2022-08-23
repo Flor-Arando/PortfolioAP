@@ -1,46 +1,47 @@
 <header id="header" class="fixed-top">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+  
+     <a href="index.html" class="logo"><img src="assets/img/Logo.png" alt="" class="img-fluid"></a>
+  
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+            <li><a (click)="cambiarSeccion('inicio')">Inicio</a></li>
+            <li><a (click)="cambiarSeccion('sobre_mi')">Sobre mi</a></li>
+            <li><a (click)="cambiarSeccion('educacion')">Educación</a></li>
+            <li><a (click)="cambiarSeccion('portfolio')">Proyectos</a></li> <!--se lo cambie x proyectos-->
+            <li><a (click)="cambiarSeccion('experiencia')">Experiencia</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+  
+      <div class="header-social-links">
+        
+        <a href="https://www.facebook.com/queondachusma" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.youtube.com/channel/UC9iH8YLkfE2u-XSqsnvv-SA/channels" class="youtube"><i class="bi bi-youtube"></i></a>
+        <a href="https://github.com/Flor-Arando" class="github"><i class="bi bi-github"></i></a>
+        <a href="https://ar.linkedin.com/in/florencia-arando-942b3017a" class="linkedin"><i class="bi bi-linkedin"></i></a>
+ 
 
-   <a href="index.html" class="logo"><img src="assets/img/Logo.png" alt="" class="img-fluid"></a>
-
-    <nav id="navbar" class="navbar order-last order-lg-0">
-      <ul>
-          <li><a (click)="cambiarSeccion('inicio')">Inicio</a></li>
-          <li><a (click)="cambiarSeccion('sobre_mi')">Sobre mi</a></li>
-          <li><a (click)="cambiarSeccion('educacion')">Educación</a></li>
-          <li><a (click)="cambiarSeccion('portfolio')">Portfolio</a></li>
-          <li><a (click)="cambiarSeccion('experiencia')">Experiencia</a></li>
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav><!-- .navbar -->
-
-    <div class="header-social-links">
-      <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+      </div>
     </div>
-  </div>
-</header>
-
-<section *ngIf="seccion == 'inicio'" id="hero" class="d-flex align-items-center">
-  <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
-    <h1>{{ persona.nombre }} {{ persona.apellido }}</h1>
-    <h2>Full Stack Developer Jr</h2>
-    <a (click)="cambiarSeccion('sobre_mi')" class="btn-about">Sobre mi</a> <!-- falta que cursor cambie a manito -->
-  </div>
-</section>
-
-
+  </header>
+  
+  <section *ngIf="seccion == 'inicio'" id="hero" class="d-flex align-items-center">
+    <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
+      <h1>{{ persona.nombre }} {{ persona.apellido }}</h1>
+      <h2>{{persona.titulo}}</h2>
+      <a (click)="cambiarSeccion('sobre_mi')" class="btn-about">Sobre mi</a> <!-- falta que cursor cambie a manito -->
+    </div>
+  </section>
 
 <div *ngIf="seccion == 'sobre_mi'">
-<!--
+
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
           <h2>Sobre Mi</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p>{{persona.descripcion}}</p>
         </div>
 
         <div class="row">
@@ -48,49 +49,31 @@
             <img src="assets/img/back.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content">
-            <h3>Illustrator &amp; UI/UX Designer</h3>
-            <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
-            </p>
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-8">
                 <ul>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Fecha de Nacimiento:</strong> 7 de Agosto de 1997</li>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Sitio Web:</strong> www.example.com</li>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Celular:</strong> +123 456 7890</li>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Dirección:</strong> City : New York, USA</li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                    <li><i class="bi bi-rounded-right"></i> <strong>Edad:</strong> 24 años</li>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Grado:</strong> Master</li>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Correo Electrónico:</strong> www.example.com</li>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Disponibilidad:</strong> Full time</li>
+                  <li><i class="bi bi-rounded-right"></i> <strong>Fecha de Nacimiento: </strong> {{persona.nacimiento}}</li>
+                  <li><i class="bi bi-rounded-right"></i> <strong>Dirección: </strong>{{persona.direccion}}</li>
+                  <li><i class="bi bi-rounded-right"></i> <strong>Correo Electrónico: </strong>{{persona.correo}}</li>
                 </ul>
               </div>
             </div>
-            <p>
-              Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci omnis et ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.
-              Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus itaque neque. Aliquid amet quidem ut quaerat cupiditate. Ab et eum qui repellendus omnis culpa magni laudantium dolores.
-            </p>
           </div>
         </div>
 
       </div>
     </section>
-    -->
+    
 
     <section id="skills" class="skills">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Habilidades duras y blandas</h2>
+          <h2>Habilidades</h2>
         </div>
 
         <div class="row skills-content">
-          <div class="col-lg-6">
+          <div class="col-lg-12"> 
             <app-skill-circulo *ngFor="let skill of skills"></app-skill-circulo>
             <!--  [nivel]="80" [color]="gold" -->
           </div>
@@ -100,20 +83,175 @@
 </div>
 
 <div *ngIf="seccion == 'educacion'">
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-  educacion
+    <section id="resume" class="resume">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Estudios Realizados</h2>
+            </div>
+
+            <div class="resume-item">
+              <h4>estudio 1</h4>
+              <h5>2015 - 2016</h5>
+              <p><em>universidad</em></p>
+            </div>
+
+            <div class="resume-item">
+                <h4>estudio 2</h4>
+                <h5>2015 - 2016</h5>
+                <p><em>universidad</em></p>
+            </div>
+
+            <div class="resume-item">
+                <h4>curso 1</h4>
+                <h5>2015 - 2016</h5>
+            </div>
+      
+            <div class="resume-item">
+                <h4>curso 2</h4>
+                <h5>2015 - 2016</h5>
+            </div>
+
+            <div class="resume-item">
+                <h4>jornada 1</h4>
+                <h5>2015 - 2016</h5>
+            </div>
+      
+            <div class="resume-item">
+                <h4>jornada 2</h4>
+                <h5>2015 - 2016</h5>
+            </div>
+
+    
+        </div>
+    </section>
 </div>
 
 <div *ngIf="seccion == 'portfolio'">
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-  portfolio
+    <section id="portfolio" class="portfolio">
+        <div class="container" data-aos="fade-up">
+  
+          <div class="section-title">
+            <h2>Proyectos Realizados</h2>
+          </div>
+  
+        <!-- <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+              <div class="portfolio-wrap">
+                <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Web 3</h4>
+                  <p>Web</p>
+                  <div class="portfolio-links">
+                    <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
+                    <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div> -->
+  
+        </div> 
+      </section>
+
+          <!-- ======= Portfolio Details Section ======= -->
+      <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-6">
+              <div class="portfolio-details-slider swiper">
+                <div class="swiper-wrapper align-items-center">
+  
+                  <div class="swiper-slide">
+                    <img src="assets/img/portfolio/portfolio-1.jpg" alt="">
+                  </div>
+  
+  
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+  
+            <div class="col-lg-6">
+              <div class="portfolio-info">
+                <h3>{{proyecto}}</h3> 
+                <ul>
+                  <li><strong>Periodo</strong>completar con atributo correspondiente</li> 
+                  <li><strong>Client</strong>: ASU Company</li>
+                  <li><strong>Project date</strong>: 01 March, 2020</li>
+                  <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
+                </ul>
+              </div>
+              <div class="portfolio-description">
+                <h2>This is an example of portfolio detail</h2>
+                <p>
+                  Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
+                </p>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+      </section><!-- End Portfolio Details Section -->
+  
 </div>
 
 <div *ngIf="seccion == 'experiencia'">
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-  experiencia
   <!--
   <div *ngFor="let dato of datos">
   </div>
   -->
+  <section id="resume" class="resume">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Experiencia Laboral</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="resume-title"></h3>
+          <div class="resume-item">
+            <h4>Senior graphic design specialist</h4>
+            <h5>2019 - Present</h5>
+            <p><em>Experion, New York, NY </em></p>
+            
+            <ul>
+              <li>Lead in the design, development, and implementation of the graphic, layout, and production communication materials</li>
+            </ul>
+            
+          </div>
+          <div class="resume-item">
+            <h4>Graphic design specialist</h4>
+            <h5>2017 - 2018</h5>
+            <p><em>Stepping Stone Advertising, New York, NY</em></p>
+            
+            <ul>
+              <li>Developed numerous marketing programs (logos, brochures,infographics, presentations, and advertisements).</li>
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 </div>
+
+<section>
+    <footer id="footer">
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Kelly</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </footer>
+</section>

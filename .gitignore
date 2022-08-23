@@ -1,4 +1,8 @@
 node_modules
 mvnw
 mvnw.cmd
+*.class
+*.pack
+/target
+frontend/.angular
 

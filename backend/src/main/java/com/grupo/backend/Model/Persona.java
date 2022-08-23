@@ -18,7 +18,7 @@ public class Persona {
     private String descripcion;
     private String correo;
     private String direccion;
-    private LocalDate fechaNacimiento;
+    private LocalDate nacimiento;
     private String fotoPerfil;
 
     //private LocalDate nacimiento;
@@ -105,12 +105,12 @@ public class Persona {
         this.direccion = direccion;
     }
 
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
+    public LocalDate getNacimiento() {
+        return nacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setNacimiento(LocalDate nacimiento) {
+        this.nacimiento = nacimiento;
     }
 
     public String getFotoPerfil() {

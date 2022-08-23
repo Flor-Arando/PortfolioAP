@@ -9,7 +9,8 @@ import { SkillCirculoComponent } from './skill-circulo/skill-circulo.component';
 @NgModule({
   declarations: [
     AppComponent,
-    SkillCirculoComponent
+    SkillCirculoComponent,
+    
   ],
   imports: [
     BrowserModule,
