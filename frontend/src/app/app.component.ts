@@ -16,7 +16,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
-    this.seccion = "sobre_mi"; // inicio, sobre_mi, educacion, portfolio, 
+    this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
     this.persona = {};
     this.skills = [];
     this.proyecto = "";
@@ -72,10 +72,14 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   guardarSobreMi(persona : any) {
-    console.log("actualizar");
-    console.log(persona);
+    //console.log("actualizar");
+    //console.log(persona);
     this.http.put("http://localhost:8080/persona/update", persona).subscribe(
       a => {}
     );
+  }
+
+  guardarInicio(persona : any) {
+    this.guardarSobreMi(persona);
   }
 }

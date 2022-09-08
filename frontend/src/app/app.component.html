@@ -26,9 +26,11 @@
 <!---------------------------------------------------------------------------------------------------------- INICIO -->
   <section *ngIf="seccion == 'inicio'" id="hero" class="d-flex align-items-center">
     <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
+      <i class="bi bi-pencil editar-icono" data-bs-toggle="modal" data-bs-target="#modal_inicio"></i>
+
       <h1>{{ persona.nombre }} {{ persona.apellido }}</h1>
       <h2>{{ persona.titulo }}</h2>
-      <a (click)="cambiarSeccion('sobre_mi')" class="btn-about">Sobre mi</a> <!-- falta que cursor cambie a manito -->
+      <a (click)="cambiarSeccion('sobre_mi')" class="btn-about">Sobre mi</a>
     </div>
   </section>
 
@@ -39,7 +41,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Sobre Mi</h2> <i class="bi bi-pencil editar-icono" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+          <h2>Sobre Mi</h2> <i class="bi bi-pencil editar-icono" data-bs-toggle="modal" data-bs-target="#modal_sobremi"></i>
           <p>{{ persona.descripcion }}</p>
         </div>
 
@@ -213,11 +215,11 @@
 </div>
 
 <!---------------------------------------------------------------------------------------------------------- FORMULARIO SOBRE MI -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_sobremi" tabindex="-1" aria-labelledby="modal_sobremi_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editar 'Sobre Mi'</h5>
+        <h5 class="modal-title" id="modal_sobremi_label">Editar 'Sobre Mi'</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -244,7 +246,51 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+        <!--
+          Falta que aparezca un mensaje de exito o error al guardar.
+          Tambien deben resetearse los datos al cerrar el modal sin guardar. Actualmente aparecen modificados segun lo que se escribe en el formulario, pero no se guardan en DB
+        -->
         <button type="button" class="btn btn-primary" (click)="guardarSobreMi(persona)" data-bs-dismiss="modal">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---------------------------------------------------------------------------------------------------------- FORMULARIO INICIO -->
+<div class="modal fade" id="modal_inicio" tabindex="-1" aria-labelledby="modal_inicio_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_inicio_label">Editar 'Inicio'</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <form>
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="persona.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="fecha" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="persona.apellido">
+          </div>
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Titulo</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="persona.titulo">
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+        <!--
+          Falta que aparezca un mensaje de exito o error al guardar.
+          Tambien deben resetearse los datos al cerrar el modal sin guardar. Actualmente aparecen modificados segun lo que se escribe en el formulario, pero no se guardan en DB
+        -->
+        <button type="button" class="btn btn-primary" (click)="guardarInicio(persona)" data-bs-dismiss="modal">Guardar</button>
       </div>
     </div>
   </div>

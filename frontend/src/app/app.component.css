@@ -1,8 +1,12 @@
 #navbar ul li a {
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .editar-icono {
     cursor: pointer;
     font-size: 2em;
+}
+
+a {
+    cursor: pointer;
 }
