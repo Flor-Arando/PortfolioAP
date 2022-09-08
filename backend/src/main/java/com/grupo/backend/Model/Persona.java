@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-//import java.time.format.DateTimeFormatter;
-
 @Entity
 public class Persona {
     @Id
@@ -20,18 +18,6 @@ public class Persona {
     private String direccion;
     private LocalDate nacimiento;
     private String fotoPerfil;
-
-    //private LocalDate nacimiento;
-
-    /*public Persona(int id, String usuario, String clave, String nombre, String apellido//, LocalDate nacimiento/)
-    {
-        this.id = id;
-        this.usuario = usuario;
-        this.clave = clave;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        //this.nacimiento = nacimiento;
-    }*/
 
     public int getId() {
         return id;
@@ -120,12 +106,5 @@ public class Persona {
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
-
-    /*public String getNacimiento() {
-        return this.nacimiento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    }
-
-    public void setNacimiento(LocalDate nacimiento) {
-        this.nacimiento = nacimiento;
-    }*/
+  
 }

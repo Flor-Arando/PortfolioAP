@@ -1,16 +1,3 @@
-/*
-DOCUMENTACION
-lo minimo indispensable y suficiente https://angular.io/start
-configuracion y arranque: https://angular.io/guide/setup-local
-crear componentes: https://angular.io/guide/component-overview
-requests a apis: https://angular.io/guide/http
-
-COMANDOS ANGULAR CLI
-ng new my-app  -->  crea app
-ng serve --open  -->  levanta servidor local
-ng generate component <component-name>  -->  crea componente
-*/
-
 import { Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // Lo trae desde la declaracion global (?)
 import { CommonModule } from '@angular/common'; // Para el ngFor
@@ -24,15 +11,17 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   seccion : string;
   persona : any;
   skills : any[];
-  proyecto: string
+  proyecto: string;
+  educacion : any[];
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
-    this.seccion = "sobre_mi"; // inicio, sobre_mi, educacion, portfolio, experiencia
+    this.seccion = "sobre_mi"; // inicio, sobre_mi, educacion, portfolio, 
+    this.persona = {};
     this.skills = [];
     this.proyecto = "";
     //this.experiencia = " ";
-    //this.educacion = "";
+    this.educacion = [];
   }
   
   // OnInit es para ejecutar algo automaticamente despues del constructor
@@ -40,6 +29,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
       this.cargarPersona();
       this.cargarSkills();
       this.cargarProyecto();
+      this.cargarEducacion();
   }
 
   /////////////////////////////////////////// Metodos propios
@@ -49,7 +39,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   cargarPersona() {
-    this.http.get<any>("http://localhost:8080/persona-frontend").subscribe(
+    this.http.get<any>("http://localhost:8080/persona").subscribe(
         resultado => {
           this.persona = resultado;
         }/*,
@@ -68,9 +58,24 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   cargarProyecto() {
     this.http.get<any>("http://localhost:8080/proyecto/list").subscribe(
         resultado => {
-            this.proyecto =resultado;
+            this.proyecto = resultado;
         }
     );
   }
 
+  cargarEducacion() {
+    this.http.get<any>("http://localhost:8080/educacion/list").subscribe(
+        resultado => {
+          this.educacion = resultado;
+        }
+    );
+  }
+
+  guardarSobreMi(persona : any) {
+    console.log("actualizar");
+    console.log(persona);
+    this.http.put("http://localhost:8080/persona/update", persona).subscribe(
+      a => {}
+    );
+  }
 }
