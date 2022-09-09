@@ -11,17 +11,19 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   seccion : string;
   persona : any;
   skills : any[];
-  proyecto: string;
+  proyecto: any[];
   educacion : any[];
+  experiencia : any[];
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
     this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
     this.persona = {};
     this.skills = [];
-    this.proyecto = "";
+    this.proyecto = [];
     //this.experiencia = " ";
     this.educacion = [];
+    this.experiencia = [];
   }
   
   // OnInit es para ejecutar algo automaticamente despues del constructor
@@ -30,6 +32,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
       this.cargarSkills();
       this.cargarProyecto();
       this.cargarEducacion();
+      this.cargarExperiencia();
   }
 
   /////////////////////////////////////////// Metodos propios
@@ -71,6 +74,14 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     );
   }
 
+  cargarExperiencia() {
+    this.http.get<any>("http://localhost:8080/experiencia/list").subscribe(
+        resultado => {
+          this.experiencia = resultado;
+        }
+    );
+  }
+
   guardarSobreMi(persona : any) {
     //console.log("actualizar");
     //console.log(persona);
@@ -81,5 +92,11 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
 
   guardarInicio(persona : any) {
     this.guardarSobreMi(persona);
+  }
+
+  guardarExperiencia(experiencia : any) {
+    this.http.put("http://localhost:8080/experiencia/update", this.experiencia).subscribe(
+      a => {}
+    );
   }
 }
