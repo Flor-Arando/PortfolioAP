@@ -1,9 +1,11 @@
-
 <svg viewBox="0 0 60 60" style="display: inline-block;">
-    <path    stroke-dashoffset="-19" 
-          pathlength="120" d="M5,30a25,25,0,1,1,50,0a25,25,0,1,1,-50,0" fill="none" stroke="lightgrey" stroke-width="5"/>
-    <path [style.strokeDasharray]="barra" stroke-dashoffset="-25" 
-          pathlength="100" d="$M5,30a25,25,0,1,1,50,0a25,25,0,1,1,-50,0" fill="none" 
-          stroke="red" stroke-width="5"/>
-    <text font-size="10" x="50%" y="57%" text-anchor="middle">{{ nivel }}%</text>
+      <circle cx="30" cy="30" [attr.r]="radio" stroke="lightgrey" stroke-width="5" fill="none"/>
+      <circle cx="30" cy="30" [attr.r]="radio" stroke="red" stroke-width="5" fill="none"  stroke-dashoffset="39" [style.strokeDasharray]="barra"/>
+
+      <!--
+      <text font-size="8" x="50%" y="40%" text-anchor="middle">
+          <tspan x="30" dy="1.2em" *ngFor="let parte of partes">{{ parte }}</tspan>
+      </text>
+      -->
+      <text font-size="8" x="50%" y="57%" text-anchor="middle">{{ nombre }}</text>
 </svg>

@@ -1,23 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-skill-circulo',
   templateUrl: './skill-circulo.component.html',
   styleUrls: ['./skill-circulo.component.css']
 })
-export class SkillCirculoComponent implements OnInit {
+export class SkillCirculoComponent {
+  @Input() nombre : string = '';
+  @Input() nivel : number = 0;
 
-  nivel : number;
   barra : string;
+  radio : number;
+  //partes : string[];
 
   constructor() {
-    this.nivel = 40; //DANI COMO AGREGO MIS PORCENTAJES DE MYSQL PARA VERLOS?
-    this.barra = this.nivel + " " + (100 - this.nivel);
-    console.log(this.barra);
+    this.radio = 27;
+    this.barra = "";
+    //this.partes = [''];
   }
 
-  ngOnInit(): void {
-    
+  ngAfterViewChecked() {
+    let perimetro = Math.round(this.radio * 2 * 3.14);
+    let valor = Math.round(perimetro * (this.nivel / 100));
+    this.barra =  valor + " " + (perimetro - valor);
+    //this.partes = this.nombre.split(" ");
   }
-
 }

@@ -74,8 +74,7 @@
 
         <div class="row skills-content">
           <div class="col-lg-12"> 
-            <app-skill-circulo *ngFor="let skill of skills"></app-skill-circulo>
-            <!--  [nivel]="80" [color]="gold" -->
+            <app-skill-circulo *ngFor="let skill of skills" [nombre]="skill.nombre" [nivel]="skill.nivel"></app-skill-circulo>
           </div>
         </div>
       </div>

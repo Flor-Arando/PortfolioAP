@@ -16,7 +16,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
-    this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
+    this.seccion = "sobre_mi"; // inicio, sobre_mi, educacion, portfolio, 
     this.persona = {};
     this.skills = [];
     this.proyecto = "";
