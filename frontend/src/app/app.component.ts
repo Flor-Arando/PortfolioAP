@@ -14,16 +14,20 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   proyecto: any[];
   educacion : any[];
   experiencia : any[];
+  error : string;
+  anterior : object;
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
-    this.seccion = "sobre_mi"; // inicio, sobre_mi, educacion, portfolio, 
+    this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
     this.persona = {};
     this.skills = [];
     this.proyecto = [];
     //this.experiencia = " ";
     this.educacion = [];
     this.experiencia = [];
+    this.error = "";
+    this.anterior = {}; 
   }
   
   // OnInit es para ejecutar algo automaticamente despues del constructor
@@ -83,20 +87,68 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   guardarSobreMi(persona : any) {
-    //console.log("actualizar");
-    //console.log(persona);
     this.http.put("http://localhost:8080/persona/update", persona).subscribe(
-      a => {}
+      a => {
+        //this.mostrarMensajeOK = true;
+      },
+      error => {
+        this.error = error.error;
+      }
     );
   }
 
   guardarInicio(persona : any) {
-    this.guardarSobreMi(persona);
+    this.http.put("http://localhost:8080/persona/update", persona).subscribe(
+      a => {
+        this.cerrarModal("modal_inicio");
+        this.mostrarModal("modal_ok");
+      },
+      error => {
+        this.error = error.error;
+      }
+    );
   }
 
   guardarExperiencia(experiencia : any) {
     this.http.put("http://localhost:8080/experiencia/update", this.experiencia).subscribe(
       a => {}
     );
+  }
+
+  mostrarModal(id : string) {
+    let fondo = document.getElementById("fondo_modal");
+    if (fondo) {
+      fondo.style.visibility = "visible";
+    }
+
+    let e = document.getElementById(id);
+    if (e) {
+      e.style.visibility = "visible";
+      e.style.display = "inline";
+    }
+  }
+
+  cerrarModal(id : string) {
+    let fondo = document.getElementById("fondo_modal");
+    if (fondo) {
+      fondo.style.visibility = "hidden";
+    }
+
+    let e = document.getElementById(id);
+    if (e) {
+      e.style.visibility = "hidden";
+      e.style.display = "none";
+    }
+  }
+
+  mostrarModalInicio() {
+    this.anterior = structuredClone(this.persona);
+    this.mostrarModal('modal_inicio');
+
+  }
+
+  cerrarModalInicio() {
+    this.persona = structuredClone(this.anterior);
+    this.cerrarModal('modal_inicio');
   }
 }
