@@ -4,13 +4,14 @@ import { HttpClientModule } from '@angular/common/http'; // https://angular.io/a
 
 import { AppComponent } from './app.component';
 import { SkillCirculoComponent } from './skill-circulo/skill-circulo.component';
-//import { SkillCirculoComponent } from './skill-circulo.component';
-import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { FormsModule } from '@angular/forms';
+import { InicioComponent } from './inicio/inicio.component'; // <-- NgModel lives here
 
 @NgModule({
   declarations: [
     AppComponent,
     SkillCirculoComponent,
+    InicioComponent,
     
   ],
   imports: [

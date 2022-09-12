@@ -1,0 +1,44 @@
+<section id="hero" class="d-flex align-items-center">
+    <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
+        <i class="bi bi-pencil editar-icono" (click)="mostrarModalInicio()"></i>
+    
+        <h1>{{ persona.nombre }} {{ persona.apellido }}</h1>
+        <h2>{{ persona.titulo }}</h2>
+        <a (click)="cambiarSeccion('sobre_mi')" class="btn-about">Sobre mi</a>
+    </div>
+</section>
+
+<div class="modal" id="modal_inicio" tabindex="-1" aria-labelledby="modal_inicio_label" aria-hidden="true" style="z-index: 999;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_inicio_label">Editar 'Inicio'</h5>
+              <button type="button" class="btn-close" (click)="cerrarModalInicio()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="descripcion" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="persona.nombre">
+                </div>
+                <div class="mb-3">
+                  <label for="fecha" class="form-label">Apellido</label>
+                  <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="persona.apellido">
+                </div>
+                <div class="mb-3">
+                  <label for="direccion" class="form-label">Titulo</label>
+                  <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="persona.titulo">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModalInicio()">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="guardarInicio(persona)">Guardar</button>
+            </div>
+    
+            <div *ngIf="error != ''" class="text-danger fs-4 fw-bold text-center mb-5">
+              {{ error }}
+            </div>
+        </div>
+    </div>
+</div>

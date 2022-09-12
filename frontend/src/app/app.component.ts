@@ -9,13 +9,12 @@ import { CommonModule } from '@angular/common'; // Para el ngFor
 })
 export class AppComponent implements OnInit { // OnInit es para ejecutar algo automaticamente despues del constructor
   seccion : string;
-  persona : any;
+  persona : any; // esto tendria que ser "object". se de deja asi mientras se cambia, porque rompe las otras secciones
   skills : any[];
   proyecto: any[];
   educacion : any[];
   experiencia : any[];
-  error : string;
-  anterior : object;
+  anterior : object; // revisar si se sigue usando fuera de cada seccion
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
@@ -23,10 +22,8 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.persona = {};
     this.skills = [];
     this.proyecto = [];
-    //this.experiencia = " ";
     this.educacion = [];
     this.experiencia = [];
-    this.error = "";
     this.anterior = {}; 
   }
   
@@ -92,19 +89,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
         //this.mostrarMensajeOK = true;
       },
       error => {
-        this.error = error.error;
-      }
-    );
-  }
-
-  guardarInicio(persona : any) {
-    this.http.put("http://localhost:8080/persona/update", persona).subscribe(
-      a => {
-        this.cerrarModal("modal_inicio");
-        this.mostrarModal("modal_ok");
-      },
-      error => {
-        this.error = error.error;
+        //this.error = error.error;
       }
     );
   }
@@ -139,16 +124,5 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
       e.style.visibility = "hidden";
       e.style.display = "none";
     }
-  }
-
-  mostrarModalInicio() {
-    this.anterior = structuredClone(this.persona);
-    this.mostrarModal('modal_inicio');
-
-  }
-
-  cerrarModalInicio() {
-    this.persona = structuredClone(this.anterior);
-    this.cerrarModal('modal_inicio');
   }
 }
