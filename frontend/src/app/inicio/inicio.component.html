@@ -1,4 +1,4 @@
-<section id="hero" class="d-flex align-items-center">
+<section id="hero" class="d-flex align-items-center" [ngStyle]="{'background-image': 'url(' + persona.banner + ')'}">
     <div class="container d-flex flex-column align-items-center" data-aos="zoom-in" data-aos-delay="100">
         <i class="bi bi-pencil editar-icono" (click)="mostrarModalInicio()"></i>
     
@@ -28,6 +28,10 @@
                 <div class="mb-3">
                   <label for="direccion" class="form-label">Titulo</label>
                   <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="persona.titulo">
+                </div>
+                <div class="mb-3">
+                  <label for="direccion" class="form-label">URL Banner</label>
+                  <input type="text" class="form-control" id="banner" name="banner" [(ngModel)]="persona.banner">
                 </div>
               </form>
             </div>

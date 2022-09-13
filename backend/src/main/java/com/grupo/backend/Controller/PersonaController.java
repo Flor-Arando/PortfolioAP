@@ -46,6 +46,7 @@ public class PersonaController {
 			persona.setDireccion(newPersona.getDireccion());
 			persona.setNacimiento(newPersona.getNacimiento());
 			persona.setFotoPerfil(newPersona.getFotoPerfil());
+			persona.setBanner(newPersona.getBanner());
 				
 			personaRepository.save(persona);
 

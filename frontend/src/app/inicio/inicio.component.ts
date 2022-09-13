@@ -31,6 +31,7 @@ export class InicioComponent implements OnInit {
 
   cerrarModalInicio() {
     this.persona = structuredClone(this.anterior);
+    this.error = "";
     this.cerrarModalEvent.emit('modal_inicio');
   }
 
@@ -41,7 +42,7 @@ export class InicioComponent implements OnInit {
         this.mostrarModalEvent.emit("modal_ok");
       },
       error => {
-        this.error = error.error;
+        this.error = error.error.message || error.error;
       }
     );
   }

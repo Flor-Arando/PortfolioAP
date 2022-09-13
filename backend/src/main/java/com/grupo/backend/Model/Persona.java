@@ -18,6 +18,7 @@ public class Persona {
     private String direccion;
     private LocalDate nacimiento;
     private String fotoPerfil;
+    private String banner;
 
     public int getId() {
         return id;
@@ -106,5 +107,12 @@ public class Persona {
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
-  
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
 }
