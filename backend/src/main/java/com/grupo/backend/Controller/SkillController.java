@@ -42,6 +42,7 @@ public class SkillController {
         return "Saved";
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping(path="/delete/{id}")
     public ResponseEntity<HttpStatus> deleteSkill(@PathVariable("id") int id) {
     try {

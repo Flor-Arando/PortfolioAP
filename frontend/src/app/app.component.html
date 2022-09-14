@@ -30,58 +30,18 @@
   [persona]="persona"
   (cambiarSeccionEvent)="cambiarSeccion($event)"
   (mostrarModalEvent)="mostrarModal($event)"
-  (cerrarModalEvent)="cerrarModal($event)"
->
+  (cerrarModalEvent)="cerrarModal($event)">
 </app-inicio>
 
-
-
-<!---------------------------------------------------------------------------------------------------------- SOBRE MI -->
-<div *ngIf="seccion == 'sobre_mi'">
-    <section id="about" class="about">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Sobre Mi</h2> <i class="bi bi-pencil editar-icono" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
-          <p>{{ persona.descripcion }}</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4">
-            <img src="assets/img/back.jpg" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-8 pt-4 pt-lg-0 content">
-            <div class="row">
-              <div class="col-lg-8">
-                <ul>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Fecha de Nacimiento: </strong> {{ persona.nacimiento }}</li>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Dirección: </strong>{{ persona.direccion }}</li>
-                  <li><i class="bi bi-rounded-right"></i> <strong>Correo Electrónico: </strong>{{ persona.correo }}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-<!---------------------------------------------------------------------------------------------------------- SKILLS -->
-    <section id="skills" class="skills">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Habilidades</h2>
-        </div>
-
-        <div class="row skills-content">
-          <div class="col-lg-12"> 
-            <app-skill-circulo *ngFor="let skill of skills" [nombre]="skill.nombre" [nivel]="skill.nivel"></app-skill-circulo>
-          </div>
-        </div>
-      </div>
-    </section>
-</div>
-
+<app-sobre-mi
+  *ngIf="seccion == 'sobre_mi'"
+  [persona]="persona"
+  [skills]="skills"
+  (cambiarSeccionEvent)="cambiarSeccion($event)"
+  (mostrarModalEvent)="mostrarModal($event)"
+  (cerrarModalEvent)="cerrarModal($event)">
+  (borrarSkillEvent)="borrarSkill($event)"
+</app-sobre-mi>
 
 <!---------------------------------------------------------------------------------------------------------- EDUCACION -->
 <div *ngIf="seccion == 'educacion'">
@@ -206,43 +166,7 @@
   </section>
 </div>
 
-<!---------------------------------------------------------------------------------------------------------- FORMULARIO SOBRE MI -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editar 'Sobre Mi'</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        
-        <form>
-          <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripcion</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="persona.descripcion">
-          </div>
-          <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha Nacimiento</label>
-            <input type="text" class="form-control" id="nacimiento" name="nacimiento" [(ngModel)]="persona.nacimiento">
-          </div>
-          <div class="mb-3">
-            <label for="direccion" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="persona.direccion">
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="correo" name="correo" [(ngModel)]="persona.correo">
-          </div>
-        </form>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="guardarSobreMi(persona)" data-bs-dismiss="modal">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!---------------------------------------------------------------------------------------------------------- FORMULARIO INICIO -->
 <!--
@@ -355,3 +279,4 @@
     </div>
   </div>
 </div>
+
