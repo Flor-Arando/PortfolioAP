@@ -1,0 +1,73 @@
+
+    <section id="portfolio" class="portfolio">
+        <div class="container" data-aos="fade-up">
+  
+          <div class="section-title">
+            <h2>Proyectos Realizadoss</h2>
+          </div>
+  
+        <!-- <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+              <div class="portfolio-wrap">
+                <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Web 3</h4>
+                  <p>Web</p>
+                  <div class="portfolio-links">
+                    <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
+                    <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div> -->
+  
+        </div> 
+      </section>
+
+          <!-- ======= Portfolio Details Section ======= -->
+      <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-6">
+              <div class="portfolio-details-slider swiper">
+                <div class="swiper-wrapper align-items-center">
+  
+                  <div class="swiper-slide">
+                    <img src="assets/img/portfolio/portfolio-1.jpg" alt="">
+                  </div>
+  
+  
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+  
+            <div class="col-lg-6">
+              <div class="portfolio-info">
+                <div class="resume-item" *ngFor="let proyecto of proyecto">
+                <h2>{{ proyecto.titulo }}</h2> 
+                <ul>
+                  <li><strong>Periodo: </strong>{{ proyecto.desde }} - {{ proyecto.hasta }}</li> 
+                  
+                  <li><strong>URL del proyecto: </strong>: <a>{{ proyecto.link }}</a></li>
+                </ul>
+            
+              <div class="portfolio-description">
+                <h2>Descripción:</h2>
+                <p>{{proyecto.descripcion }}</p>
+              </div>
+
+                </div>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+      </section><!-- End Portfolio Details Section -->
+
