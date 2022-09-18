@@ -18,12 +18,13 @@ create table persona
     correo varchar (50) not null,
     direccion varchar (100) not null,
     nacimiento date not null, 
-    fotoPerfil varchar(100) not null,
+    foto_perfil varchar(100) not null,
+    banner varchar(255) not null, 
 
     primary key (id)
 );
 
-insert into persona values(1, 'flopina', '1234', 'Flor', 'Arando','Full Stack Developer Jr', 'descripcion sobre mi con años y a q me dedico', 'arandoflorenciaromina@gmail.com', 'CABA, Bs.As, Argentina', '1997-08-07', 'www.google.com');
+insert into persona values(1, 'flopina', '1234', 'Flor', 'Arando','Full Stack Developer Jr', 'descripcion sobre mi con años y a q me dedico', 'arandoflorenciaromina@gmail.com', 'CABA, Bs.As, Argentina', '1997-08-07', 'https://acortar.link/P4P7XW', 'https://acortar.link/P4P7XW');
 
 /***********************************************************************/
 
