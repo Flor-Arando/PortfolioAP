@@ -1,4 +1,4 @@
-<div id="fondo_modal" style="background-color: rgba(0, 0, 0, 0.4); min-width: 100%; min-height: 100%; position: absolute; z-index: 100; visibility: hidden;"></div>
+<div id="fondo_modal" style="background-color: rgba(0, 0, 0, 0.4); min-width: 100%; min-height: 300%; position: absolute; z-index: 100; visibility: hidden;"></div>
 
 <header id="header" class="fixed-top">
     <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -39,8 +39,9 @@
   [skills]="skills"
   (cambiarSeccionEvent)="cambiarSeccion($event)"
   (mostrarModalEvent)="mostrarModal($event)"
-  (cerrarModalEvent)="cerrarModal($event)">
+  (cerrarModalEvent)="cerrarModal($event)"
   (borrarSkillEvent)="borrarSkill($event)"
+  (agregarSkillEvent)="agregarSkill($event)">
 </app-sobre-mi>
 
 <!---------------------------------------------------------------------------------------------------------- EDUCACION -->
@@ -166,53 +167,7 @@
   </section>
 </div>
 
-
-
-<!---------------------------------------------------------------------------------------------------------- FORMULARIO INICIO -->
-<!--
-<div class="modal fffade" id="modal_inicio" tabindex="-1" aria-labelledby="modal_inicio_label" aria-hidden="true" style="z-index: 999;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal_inicio_label">Editar 'Inicio'</h5>
-          <button type="button" class="btn-close" (click)="cerrarModalInicio()" aria-label="Close"></button>
-        </div>
-        
-        
-
-        <div class="modal-body">
-          
-          <form>
-            <div class="mb-3">
-              <label for="descripcion" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="persona.nombre">
-            </div>
-            <div class="mb-3">
-              <label for="fecha" class="form-label">Apellido</label>
-              <input type="text" class="form-control" id="apellido" name="apellido" [(ngModel)]="persona.apellido">
-            </div>
-            <div class="mb-3">
-              <label for="direccion" class="form-label">Titulo</label>
-              <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="persona.titulo">
-            </div>
-          </form>
-  
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="cerrarModalInicio()">Cerrar</button>
-          <button type="button" class="btn btn-primary" (click)="guardarInicio(persona)" data-bs-dismiss="modal">Guardar</button>
-        </div>
-
-        <div *ngIf="error != ''" class="text-danger fs-4 fw-bold text-center mb-5">
-          {{ error }}
-        </div>
-      </div>
-    </div>
-  </div>
--->
 <!----------------------------------------------------------------------------------------------------FORMULARIO EXPERIENCIA-->
-
 <div class="modal fade" id="modal_experiencia" tabindex="-1" aria-labelledby="modal_experiencia_label" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

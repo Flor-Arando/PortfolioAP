@@ -14,17 +14,15 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   proyecto: any[];
   educacion : any[];
   experiencia : any[];
-  anterior : object; // revisar si se sigue usando fuera de cada seccion
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
-    this.seccion = "sobre_mi"; // inicio, sobre_mi, educacion, portfolio, 
+    this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
     this.persona = {};
     this.skills = [];
     this.proyecto = [];
     this.educacion = [];
     this.experiencia = [];
-    this.anterior = {}; 
   }
   
   // OnInit es para ejecutar algo automaticamente despues del constructor
@@ -127,11 +125,12 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   borrarSkill(id : number) {
-    console.log("recibido " + id);
-    /*this.skills = this.skills.filter(function(value, index, arr){ 
-      return value != id;
+    this.skills = this.skills.filter(function(value, index, arr) { 
+      return value.id != id;
     });
+  }
 
-    console.log(this.skills);*/
+  agregarSkill(skill : any) {
+    this.skills.push(skill);
   }
 }

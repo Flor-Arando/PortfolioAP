@@ -12,9 +12,11 @@ export class SobreMiComponent {
   @Output() cambiarSeccionEvent = new EventEmitter<string>();
   @Output() mostrarModalEvent = new EventEmitter<string>();
   @Output() cerrarModalEvent = new EventEmitter<string>();
-  @Output() borrarSkillEvent = new EventEmitter<string>();
+  @Output() borrarSkillEvent = new EventEmitter<number>();
+  @Output() agregarSkillEvent = new EventEmitter<any>();
 
-  anterior : object = {};
+  anterior : any = {};
+  seleccionado : any = {};
   error : string = "";
 
   constructor(private http : HttpClient) { }
@@ -32,7 +34,7 @@ export class SobreMiComponent {
 
   guardarSobreMi(persona : any) {
     this.http.put("http://localhost:8080/persona/update", persona).subscribe(
-      a => {
+      respuesta => {
         this.cerrarModalEvent.emit("modal_sobremi");
         this.mostrarModalEvent.emit("modal_ok");
       },
@@ -42,33 +44,49 @@ export class SobreMiComponent {
     );
   }
 
-  mostrarModalSkill() {
-    //this.anterior = structuredClone(this.persona);
+  mostrarModalSkill(skill : any) {
+    this.seleccionado = skill;
+    this.anterior = structuredClone(skill);
     this.mostrarModalEvent.emit('modal_skill');
   }
 
   cerrarModalSkill() {
-    //this.persona = structuredClone(this.anterior);
+    this.seleccionado.nombre = this.anterior.nombre;
+    this.seleccionado.nivel = this.anterior.nivel;
     this.error = "";
     this.cerrarModalEvent.emit('modal_skill');
   }
 
-  mostrarModalBorrar(id : string) {
-    //this.anterior = structuredClone(this.persona);
-    //this.mostrarModalEvent.emit('modal_skill');
-
-
-    /*if (window.confirm("¿Està seguro de borrar?")) {
+  mostrarModalBorrar(id : number) {
+    if (window.confirm("¿Borrar?")) {
       this.http.delete("http://localhost:8080/skill/delete/" + id).subscribe(
-        a => {
-          console.log("mostrarModalBorrar, response " + id);
+        respuesta => {
           this.borrarSkillEvent.emit(id);
         }
       );
-    }*/
-
-    console.log("qwertyuiop " + id);
-    this.borrarSkillEvent.emit(id);
+    }
   }
-  
+
+  guardarSkill(skill : any) {
+    let url = skill.id > 0 ? "http://localhost:8080/skill/update/" + skill.id : "http://localhost:8080/skill/add";
+    let solicitud = skill.id > 0 ? this.http.put(url, skill) : this.http.post(url, skill);
+
+    solicitud.subscribe(
+      respuesta => {
+        this.error = "";
+        this.cerrarModalEvent.emit("modal_skill");
+        this.mostrarModalEvent.emit("modal_ok");
+
+        // Es edicion
+        if (skill.id == 0) {
+          skill.id = respuesta;
+          this.agregarSkillEvent.emit(skill);
+        }
+      },
+      error => {
+        this.error = error.error.message || error.error;
+      }
+    );
+  }
+
 }
