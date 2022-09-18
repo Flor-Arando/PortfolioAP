@@ -1,0 +1,128 @@
+
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Sobre Mi</h2> <i class="bi bi-pencil" (click)="mostrarModalSobreMi()"></i>
+          <p>{{ persona.descripcion }}</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <img src="{{ persona.fotoPerfil }}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-8 pt-4 pt-lg-0 content">
+            <div class="row">
+              <div class="col-lg-8">
+                <ul>
+                  <li><i class="bi bi-rounded-right"></i> <strong>Fecha de Nacimiento: </strong> {{ persona.nacimiento }}</li>
+                  <li><i class="bi bi-rounded-right"></i> <strong>Dirección: </strong>{{ persona.direccion }}</li>
+                  <li><i class="bi bi-rounded-right"></i> <strong>Correo Electrónico: </strong>{{ persona.correo }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!---------------------------------------------------------------------------------------------------------- SKILLS -->
+<section id="skills" class="skills">
+
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Habilidades</h2>
+        </div>
+        
+        <i class="bi bi-plus-circle" (click)="mostrarModalSkill({id:0, nombre:'', nivel:''})"></i>
+
+        <div class="row skills-content">
+          <div class="col-3" *ngFor="let skill of skills">
+            <i class="bi bi-pencil" (click)="mostrarModalSkill(skill)"></i>
+            &nbsp;
+            <i class="bi bi-x-lg" (click)="mostrarModalBorrar(skill.id)"></i>
+            <app-skill-circulo [nombre]="skill.nombre" [nivel]="skill.nivel"></app-skill-circulo>
+          </div>
+        </div>
+      </div>
+    </section>
+<!---------------------------------------------------------------------------------------------------------- FORMULARIO SOBRE MI -->
+    <div class="modal" id="modal_sobremi" tabindex="-1" aria-labelledby="modal_sobremi_label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_sobremi_label">Editar 'Sobre Mi'</h5>
+              <button type="button" class="btn-close" (click)="cerrarModalSobreMi()"></button>
+            </div>
+            <div class="modal-body">
+              
+              <form>
+                <div class="mb-3">
+                  <label for="descripcion" class="form-label">Descripcion</label>
+                  <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="persona.descripcion">
+                </div>
+                <div class="mb-3">
+                  <label for="fecha" class="form-label">Fecha Nacimiento</label>
+                  <input type="text" class="form-control" id="nacimiento" name="nacimiento" [(ngModel)]="persona.nacimiento">
+                </div>
+                <div class="mb-3">
+                  <label for="direccion" class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="direccion" name="direccion" [(ngModel)]="persona.direccion">
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Correo</label>
+                  <input type="email" class="form-control" id="correo" name="correo" [(ngModel)]="persona.correo">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">URL Foto</label>
+                    <input type="email" class="form-control" id="fotoPerfil" name="fotoPerfil" [(ngModel)]="persona.fotoPerfil">
+                  </div>
+              </form>
+      
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="cerrarModalSobreMi()">Cerrar</button>
+              <button type="button" class="btn btn-primary" (click)="guardarSobreMi(persona)">Guardar</button>
+            </div>
+
+            <div *ngIf="error != ''" class="text-danger fs-4 fw-bold text-center mb-5">
+              {{ error }}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+<!-- FORMULARIO SKILL ------------------------------------------->
+<div class="modal" id="modal_skill" tabindex="-1" aria-labelledby="modal_skill_label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal_skill_label">Editar 'Skill'</h5>
+          <button type="button" class="btn-close" (click)="cerrarModalSkill()"></button>
+        </div>
+        <div class="modal-body">
+          
+          <form>
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="seleccionado.nombre">
+            </div>
+            <div class="mb-3">
+              <label for="fecha" class="form-label">Nivel</label>
+              <input type="text" class="form-control" id="nivel" name="nivel" [(ngModel)]="seleccionado.nivel">
+            </div>
+          </form>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModalSkill()">Cerrar</button>
+          <button type="button" class="btn btn-primary" (click)="guardarSkill(seleccionado)" data-bs-dismiss="modal">Guardar</button>
+        </div>
+
+        <div *ngIf="error != ''" class="text-danger fs-4 fw-bold text-center mb-5">
+          {{ error }}
+        </div>
+      </div>
+    </div>
+  </div>

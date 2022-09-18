@@ -29,19 +29,19 @@ public class SkillController {
 		return this.skillRepository.findAll();
 	}
 
+    @CrossOrigin(origins = "*")
     @PostMapping(path="/add")
-    public @ResponseBody String addSkill (@RequestParam String nombre, @RequestParam int nivel) {
-    // @ResponseBody means the returned String is the response, not a view name
-    // @RequestParam means it is a parameter from the GET or POST request
-
+    public @ResponseBody ResponseEntity<String> addSkill (@RequestBody Skill newSkill) {
         Skill skill = new Skill();
-        skill.setNombre(nombre);
-        skill.setNivel(nivel);
-        skillRepository.save(skill);
-
-        return "Saved";
+        skill.setNombre(newSkill.getNombre());
+        skill.setNivel(newSkill.getNivel());
+        skill = skillRepository.save(skill);
+        skill = skillRepository.getSkillByNombre(newSkill.getNombre()); // Para obtener el ID del registro recien insertado
+        
+        return new ResponseEntity<>(String.valueOf(skill.getId()), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping(path="/delete/{id}")
     public ResponseEntity<HttpStatus> deleteSkill(@PathVariable("id") int id) {
     try {
@@ -52,25 +52,20 @@ public class SkillController {
     }
   }
 
-  @PutMapping("/update/{id}")
-  Skill replaceSkill(@RequestBody Skill newSkill, @PathVariable int id) {
-  //public @ResponseBody  String replaceEducacion(@PathVariable Long id) {  
-      return skillRepository.findById(id)
-          .map(skill -> {
-              skill.setNombre(newSkill.getNombre());
-              skill.setNivel(newSkill.getNivel());
+    @CrossOrigin(origins = "*")
+    @PutMapping("/update/{id}")
+    ResponseEntity<String> updateSkill(@RequestBody Skill newSkill, @PathVariable int id) {
+        skillRepository.findById(id)
+        .map(skill -> {
+            skill.setNombre(newSkill.getNombre());
+            skill.setNivel(newSkill.getNivel());
              
-              return skillRepository.save(skill);
-              })
-              .orElseGet(() -> {
-                  newSkill.setId(id);
-                      return
-                      skillRepository.save(newSkill);
-              
-          });
+            return new ResponseEntity<String>("", HttpStatus.OK);
+        })
+        .orElseGet(() -> {
+            return new ResponseEntity<String>("Error al actualizar skill", HttpStatus.INTERNAL_SERVER_ERROR);
+        });
 
-          
-  }
-
-
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
 }
