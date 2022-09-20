@@ -84,12 +84,14 @@
 
 
 <!---------------------------------------------------------------------------------------------------------- EDUCACION -->
-<app-educacion>
+<app-educacion
   *ngIf="seccion == 'educacion'"
   [educacion]="educacion"
   (cambiarSeccionEvent)="cambiarSeccion($event)"
   (mostrarModalEvent)="mostrarModal($event)"
-  (cerrarModalEvent)="cerrarModal($event)">
+  (cerrarModalEvent)="cerrarModal($event)"
+  (borrarEducacionEvent)="borrarEducacion($event)"
+  (agregarEducacionEvent)="agregarEducacion($event)">
 </app-educacion>
 <!---------------------------------------------------------------------------------------------------------- PORTFOLIO -->
 <div *ngIf="seccion == 'portfolio'">

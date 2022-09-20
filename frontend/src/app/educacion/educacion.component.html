@@ -1,11 +1,12 @@
     <section id="resume" class="resume">
         <div class="container" data-aos="fade-up">
             <div class="section-title">
-                <h2>Estudios Realizados</h2>
+                <h2>Estudios Realizados</h2> <i class="bi bi-plus-circle" (click)="mostrarModalEducacion(({titulo: '', desde:'', hasta:'', descripcion:''}))"></i>
             </div>
 
-            <div class="resume-item" *ngFor="let edu of educacion">
-              <h4>{{ edu.titulo }}</h4> <i class="bi bi-pencil editar-icono" data-bs-toggle="modal" data-bs-target="#modal_educacion"></i>
+            <div class="resume-item" *ngFor="let edu of educacion"><i class="bi bi-pencil editar-icono" (click)="mostrarModalEducacion(edu)"></i>
+              <i class="bi bi-x-lg" (click)="mostrarModalBorrar(edu.id)"></i> 
+              <h4>{{ edu.titulo }}</h4>
               <h5>{{ edu.desde.substring(0, 4) }} - {{ edu.hasta.substring(0, 4) }}</h5>
               <p><em>{{ edu.descripcion }}</em></p>
             </div>
@@ -18,36 +19,38 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="modal_educacion_label">Editar 'Educación'</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" (click)="cerrarModalEducacion()" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               
               <form>
                 <div class="mb-3">
                     <label for="titulo" class="form-label">Título Educación</label>
-                    <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="educacion.titulo">
+                    <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="seleccionado.titulo">
                 </div>
                 <div class="mb-3">
                 <label for="desde" class="form-label">Desde</label>
-                <input type="desde" class="form-control" id="desde" name="desde" [(ngModel)]="educacion.desde">
+                <input type="desde" class="form-control" id="desde" name="desde" [(ngModel)]="seleccionado.desde">
                 </div>
                 <div class="mb-3">
                 <label for="hasta" class="form-label">Hasta</label>
-                <input type="hasta" class="form-control" id="hasta" name="hasta" [(ngModel)]="educacion.hasta">
+                <input type="hasta" class="form-control" id="hasta" name="hasta" [(ngModel)]="seleccionado.hasta">
                 </div>
                 <div class="mb-3">
                   <label for="descripcion" class="form-label">Descripcion</label>
-                  <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="educacion.descripcion">
+                  <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="seleccionado.descripcion">
                 </div>                
               </form>
       
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" (click)="guardarEducacion(educacion)" data-bs-dismiss="modal">Guardar</button>
+              <button type="button" class="btn btn-secondary" (click)="cerrarModalEducacion()">Cerrar</button>
+              <button type="button" class="btn btn-primary" (click)="guardarEducacion(seleccionado)" data-bs-dismiss="modal">Guardar</button>
+            </div>
+
+            <div *ngIf="error != ''" class="text-danger fs-4 fw-bold text-center mb-5">
+              {{ error }}
             </div>
           </div>
         </div>
       </div>
-
-
