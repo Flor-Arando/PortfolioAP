@@ -11,29 +11,57 @@ export class ProyectosComponent {
   @Output() cambiarSeccionEvent = new EventEmitter<string>();
   @Output() mostrarModalEvent = new EventEmitter<string>();
   @Output() cerrarModalEvent = new EventEmitter<string>();
-  @Output() borrarSkillEvent = new EventEmitter<string>();
+  @Output() borrarProyectoEvent = new EventEmitter<number>();
+  @Output() agregarProyectoEvent = new EventEmitter<any>();
 
-  anterior : object = {};
+  anterior : any = {};
+  seleccionado : any = {};
   error : string = "";
 
   constructor(private http : HttpClient) { }
 
-  mostrarModalProyecto() {
-    this.anterior = structuredClone(this.proyecto);
+  mostrarModalProyecto(proyecto : any) {
+    this.seleccionado = proyecto;
+    this.anterior = structuredClone(proyecto);
     this.mostrarModalEvent.emit('modal_proyecto');
   }
 
   cerrarModalProyecto() {
-   // this.proyecto = structuredClone(this.anterior);
+    this.seleccionado.titulo = this.anterior.titulo;
+    this.seleccionado.descripcion = this.anterior.descripcion;
+    this.seleccionado.desde = this.anterior.desde;
+    this.seleccionado.hasta = this.anterior.hasta;
+    this.seleccionado.link = this.anterior.link;
+    this.seleccionado.foto = this.anterior.foto;
     this.error = "";
-    this.cerrarModalEvent.emit('modal_proyecto');
+    this.cerrarModalEvent.emit('modal_proyecto'); 
+  }
+
+  mostrarModalBorrar(id : number) { 
+    if (window.confirm("¿Borrar?")) {
+      this.http.delete("http://localhost:8080/proyecto/delete/" + id).subscribe(
+        respuesta => {
+          this.borrarProyectoEvent.emit(id);
+        }
+      );
+    }
   }
 
   guardarProyecto(proyecto : any) {
-    this.http.put("http://localhost:8080/proyecto/update", proyecto).subscribe(
-      a => {
+    let url = proyecto.id > 0 ? "http://localhost:8080/proyecto/update/" + proyecto.id : "http://localhost:8080/proyecto/add";
+    let solicitud = proyecto.id > 0 ? this.http.put(url, proyecto) : this.http.post(url, proyecto);
+
+    solicitud.subscribe(
+      respuesta => {
+        this.error = "";
         this.cerrarModalEvent.emit("modal_proyecto");
         this.mostrarModalEvent.emit("modal_ok");
+
+        // Es edicion
+        if (proyecto.id == 0) {
+          proyecto.id = respuesta;
+          this.agregarProyectoEvent.emit(proyecto);
+        }
       },
       error => {
         this.error = error.error.message || error.error;

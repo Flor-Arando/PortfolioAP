@@ -101,12 +101,14 @@
 </div>
 
 <!---------------------------------------------------------------------------------------------------------- PORTFOLIO -->
-<app-proyectos>
+<app-proyectos
   *ngIf="seccion == 'portfolio'"
   [proyecto]="proyecto"
   (cambiarSeccionEvent)="cambiarSeccion($event)"
   (mostrarModalEvent)="mostrarModal($event)"
-  (cerrarModalEvent)="cerrarModal($event)">
+  (cerrarModalEvent)="cerrarModal($event)"
+  (borrarProyectoEvent)="borrarProyecto($event)"
+  (agregarProyectoEvent)="agregarProyecto($event)">
 </app-proyectos>
 
 <!---------------------------------------------------------------------------------------------------------- EXPERIENCIA -->
