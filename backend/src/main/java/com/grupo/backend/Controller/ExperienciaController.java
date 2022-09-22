@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grupo.backend.Model.Experiencia;
@@ -32,25 +31,24 @@ import com.grupo.backend.Repository.ExperienciaRepository;
             return this.experienciaRepository.findAll();
         }
     
-    
+        @CrossOrigin(origins = "*")
         @PostMapping(path="/add")
-        public @ResponseBody String addexperiencia (@RequestParam String empresa, @RequestParam String puesto, @RequestParam String descripcion, @RequestParam String desde, @RequestParam String hasta) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-    
-    
+        public @ResponseBody ResponseEntity<String> addExperiencia (@RequestBody Experiencia newExperiencia) {
+        
             Experiencia experiencia = new Experiencia();
-            experiencia.setEmpresa(empresa);
-            experiencia.setPuesto(puesto);  
-            experiencia.setDescripcion(descripcion);
-            experiencia.setDesde(desde);
-            experiencia.setHasta(hasta);
-            experienciaRepository.save(experiencia);
+            experiencia.setEmpresa(newExperiencia.getEmpresa());
+            experiencia.setPuesto(newExperiencia.getPuesto());  
+            experiencia.setDescripcion(newExperiencia.getDescripcion());
+            experiencia.setDesde(newExperiencia.getDesde());
+            experiencia.setHasta(newExperiencia.getHasta());
+            experiencia = experienciaRepository.save(experiencia);
+            experiencia = experienciaRepository.getExperienciaByRegistro(newExperiencia.getEmpresa(), newExperiencia.getPuesto(), newExperiencia.getDesde(), newExperiencia.getHasta(), newExperiencia.getDescripcion());
+
     
-    
-            return "Saved";
+            return new ResponseEntity<>(String.valueOf(experiencia.getId()), HttpStatus.CREATED);
         }
 
+        @CrossOrigin(origins = "*")
         @DeleteMapping(path="/delete/{id}")
     public ResponseEntity<HttpStatus> deleteExperiencia(@PathVariable("id") int id) {
     try {
@@ -61,9 +59,10 @@ import com.grupo.backend.Repository.ExperienciaRepository;
     }
   }
 
+        @CrossOrigin(origins = "*")
         @PutMapping("/update/{id}")
-        Experiencia replaceExperiencia(@RequestBody Experiencia newExperiencia, @PathVariable int id) {
-            return experienciaRepository.findById(id)
+        ResponseEntity<String> replaceExperiencia(@RequestBody Experiencia newExperiencia, @PathVariable int id) {
+             experienciaRepository.findById(id)
                 .map(experiencia -> {
                     experiencia.setEmpresa(newExperiencia.getEmpresa());
                     experiencia.setPuesto(newExperiencia.getPuesto());
@@ -71,18 +70,14 @@ import com.grupo.backend.Repository.ExperienciaRepository;
                     experiencia.setDesde(newExperiencia.getDesde());
                     experiencia.setHasta(newExperiencia.getHasta());
 
-                    return experienciaRepository.save(experiencia);
+                    return new ResponseEntity<String>("", HttpStatus.OK);
                     })
                     .orElseGet(() -> {
-                        newExperiencia.setId(id);
-                            return
-                            experienciaRepository.save(newExperiencia);
+                        return new ResponseEntity<String>("Error al actualizar experiencia", HttpStatus.INTERNAL_SERVER_ERROR);
                     
-                });
+                    });
 
-                
-        }
-
-
-
-}
+                    return new ResponseEntity<String>("", HttpStatus.OK);
+                 }
+                 
+       }
