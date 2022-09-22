@@ -33,25 +33,18 @@ public class EducacionController {
     @CrossOrigin(origins = "*")
     @PostMapping(path="/add")
    public @ResponseBody ResponseEntity<String> addEducacion (@RequestBody Educacion newEducacion) {
-    //@ResponseBody means the returned String is the response, not a view name
-    //@RequestParam means it is a parameter from the GET or POST request
-
-
+    
         Educacion educacion = new Educacion();
         educacion.setTitulo(newEducacion.getTitulo());
         educacion.setDescripcion(newEducacion.getDescripcion());
 		educacion.setDesde(newEducacion.getDesde());
         educacion.setHasta(newEducacion.getHasta());
         educacion = educacionRepository.save(educacion);
-        educacion = educacionRepository.getEducacionByNombre(newEducacion.getTitulo()); //esta bien? revisar si es con los demás atributps
+        educacion = educacionRepository.getEducacionByDatos(newEducacion.getTitulo(), newEducacion.getDescripcion(), newEducacion.getDesde(), newEducacion.getHasta());
 
         return new ResponseEntity<>(String.valueOf(educacion.getId()), HttpStatus.CREATED);
     }
 
-
-    //@DeleteMapping(path="/delete/{id}")
-    //public @ResponseBody String deleteEducacion (@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String periodo) {
-    
     @CrossOrigin(origins = "*")    
     @DeleteMapping(path="/delete/{id}")
     public ResponseEntity<HttpStatus> deleteEducacion(@PathVariable("id") int id) {
