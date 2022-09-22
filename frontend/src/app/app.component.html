@@ -45,22 +45,15 @@
 </app-sobre-mi>
 
 <!---------------------------------------------------------------------------------------------------------- EDUCACION -->
-<div *ngIf="seccion == 'educacion'">
-    <section id="resume" class="resume">
-        <div class="container" data-aos="fade-up">
-            <div class="section-title">
-                <h2>Estudios Realizados</h2>
-            </div>
-
-            <div class="resume-item" *ngFor="let edu of educacion">
-              <h4>{{ edu.titulo }}</h4>
-              <h5>{{ edu.desde.substring(0, 4) }} - {{ edu.hasta.substring(0, 4) }}</h5>
-              <p><em>{{ edu.descripcion }}</em></p>
-            </div>
-        </div>
-    </section>
-</div>
-
+<app-educacion
+  *ngIf="seccion == 'educacion'"
+  [educacion]="educacion"
+  (cambiarSeccionEvent)="cambiarSeccion($event)"
+  (mostrarModalEvent)="mostrarModal($event)"
+  (cerrarModalEvent)="cerrarModal($event)"
+  (borrarEducacionEvent)="borrarEducacion($event)"
+  (agregarEducacionEvent)="agregarEducacion($event)">
+</app-educacion>
 <!---------------------------------------------------------------------------------------------------------- PORTFOLIO -->
 <div *ngIf="seccion == 'portfolio'">
     <section id="portfolio" class="portfolio">

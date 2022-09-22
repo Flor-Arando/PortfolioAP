@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grupo.backend.Model.Educacion;
@@ -27,32 +26,26 @@ public class EducacionController {
 
     @CrossOrigin(origins = "*")
     @GetMapping(path="/list")
-    public @ResponseBody Iterable<Educacion> getEducaciones() {
+    public @ResponseBody Iterable<Educacion> getEducaciones() { //EDUCACIONES hace referencia a que traiga todas ellas
         return this.educacionRepository.findAll();
     }
 
-  
+    @CrossOrigin(origins = "*")
     @PostMapping(path="/add")
-   public @ResponseBody String addeducacion (@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String desde, @RequestParam String hasta) {
-    //@ResponseBody means the returned String is the response, not a view name
-    //@RequestParam means it is a parameter from the GET or POST request
-
-
+   public @ResponseBody ResponseEntity<String> addEducacion (@RequestBody Educacion newEducacion) {
+    
         Educacion educacion = new Educacion();
-        educacion.setTitulo(titulo);
-        educacion.setDescripcion(descripcion);
-		educacion.setDesde(desde);
-        educacion.setHasta(hasta);
-        educacionRepository.save(educacion);
+        educacion.setTitulo(newEducacion.getTitulo());
+        educacion.setDescripcion(newEducacion.getDescripcion());
+		educacion.setDesde(newEducacion.getDesde());
+        educacion.setHasta(newEducacion.getHasta());
+        educacion = educacionRepository.save(educacion);
+        educacion = educacionRepository.getEducacionByDatos(newEducacion.getTitulo(), newEducacion.getDescripcion(), newEducacion.getDesde(), newEducacion.getHasta());
 
+        return new ResponseEntity<>(String.valueOf(educacion.getId()), HttpStatus.CREATED);
+    }
 
-        return "Saved";
-    } 
-
-
-    //@DeleteMapping(path="/delete/{id}")
-    //public @ResponseBody String deleteEducacion (@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String periodo) {
-
+    @CrossOrigin(origins = "*")    
     @DeleteMapping(path="/delete/{id}")
     public ResponseEntity<HttpStatus> deleteEducacion(@PathVariable("id") int id) {
     try {
@@ -63,30 +56,27 @@ public class EducacionController {
     }
   }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/update/{id}")
-    Educacion replaceEducacion(@RequestBody Educacion newEducacion, @PathVariable int id) {
-    //public @ResponseBody  String replaceEducacion(@PathVariable Long id) {  
-        return educacionRepository.findById(id)
+    ResponseEntity<String> replaceEducacion(@RequestBody Educacion newEducacion, @PathVariable int id) {
+        educacionRepository.findById(id)
+        
             .map(educacion -> {
                 educacion.setTitulo(newEducacion.getTitulo());
                 educacion.setDescripcion(newEducacion.getDescripcion());
                 educacion.setDesde(newEducacion.getDesde());
                 educacion.setHasta(newEducacion.getHasta());
 
-                return educacionRepository.save(educacion);
-                })
-                .orElseGet(() -> {
-                    newEducacion.setId(id);
-                        return
-                        educacionRepository.save(newEducacion);
-                
-            });
+                return new ResponseEntity<String>("", HttpStatus.OK);
+        })
+        .orElseGet(() -> {
+            return new ResponseEntity<String>("Error al actualizar educación", HttpStatus.INTERNAL_SERVER_ERROR);
+        });
 
-            
+        return new ResponseEntity<String>("", HttpStatus.OK);
+        
+        }           
     }
 
-
-
-}
 
 

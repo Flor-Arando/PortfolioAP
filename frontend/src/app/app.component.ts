@@ -17,7 +17,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
-    this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
+    this.seccion = "educacion"; // inicio, sobre_mi, educacion, portfolio, 
     this.persona = {};
     this.skills = [];
     this.proyecto = [];
@@ -115,17 +115,25 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     let fondo = document.getElementById("fondo_modal");
     if (fondo) {
       fondo.style.visibility = "hidden";
+    
     }
 
     let e = document.getElementById(id);
     if (e) {
       e.style.visibility = "hidden";
       e.style.display = "none";
+      
     }
   }
 
   borrarSkill(id : number) {
-    this.skills = this.skills.filter(function(value, index, arr) { 
+    this.skills = this.skills.filter(function(value, index, arr) {
+      return value.id != id;
+    });
+  }
+  
+  borrarEducacion(id : number) {
+    this.educacion = this.educacion.filter(function(value, index, arr) { 
       return value.id != id;
     });
   }
@@ -133,4 +141,9 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   agregarSkill(skill : any) {
     this.skills.push(skill);
   }
+
+  agregarEducacion(educacion : any) {
+    this.educacion.push(educacion);
+  }
 }
+
