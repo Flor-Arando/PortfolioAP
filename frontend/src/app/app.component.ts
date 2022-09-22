@@ -14,10 +14,11 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   proyecto: any[];
   educacion : any[];
   experiencia : any[];
+  
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
-    this.seccion = "educacion"; // inicio, sobre_mi, educacion, portfolio, 
+    this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
     this.persona = {};
     this.skills = [];
     this.proyecto = [];
@@ -133,7 +134,13 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
   
   borrarEducacion(id : number) {
-    this.educacion = this.educacion.filter(function(value, index, arr) { 
+    this.educacion = this.educacion.filter(function(value, index, arr) {
+      return value.id != id;
+    });
+  }
+   
+  borrarProyecto(id : number) {
+    this.proyecto = this.proyecto.filter(function(value, index, arr) { 
       return value.id != id;
     });
   }
@@ -145,5 +152,10 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   agregarEducacion(educacion : any) {
     this.educacion.push(educacion);
   }
+
+  agregarProyecto(proyecto : any) {
+    this.proyecto.push(proyecto);
+  }
+
 }
 

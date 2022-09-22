@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grupo.backend.Model.Proyecto;
@@ -31,25 +30,25 @@ public class ProyectoController {
         return this.proyectoRepository.findAll();
     }
 
-
+    @CrossOrigin(origins = "*")
     @PostMapping(path="/add")
-    public @ResponseBody String addProyecto (@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String desde, @RequestParam String hasta, @RequestParam String link, @RequestParam String foto) {
-    // @ResponseBody means the returned String is the response, not a view name
-    // @RequestParam means it is a parameter from the GET or POST request
-
+    public @ResponseBody ResponseEntity<String> addProyecto(@RequestBody Proyecto newProyecto) {
+    
         Proyecto proyecto = new Proyecto();
-        proyecto.setTitulo(titulo);
-        proyecto.setDescripcion(descripcion);
-		proyecto.setDesde(desde);
-        proyecto.setHasta(hasta);
-		proyecto.setLink(link);
-        proyecto.setFoto(foto);
-        proyectoRepository.save(proyecto);
+        proyecto.setTitulo(newProyecto.getTitulo());
+        proyecto.setDescripcion(newProyecto.getDescripcion());
+		    proyecto.setDesde(newProyecto.getDesde());
+        proyecto.setHasta(newProyecto.getHasta());
+		    proyecto.setLink(newProyecto.getLink());
+        proyecto.setFoto(newProyecto.getFoto());
+        proyecto = proyectoRepository.save(proyecto);
+        proyecto = proyectoRepository.getProyectoByDatos(newProyecto.getTitulo(), newProyecto.getDescripcion(), newProyecto.getDesde(), newProyecto.getHasta(), newProyecto.getLink(), newProyecto.getFoto());
 
 
-        return "Saved";
+        return new ResponseEntity<>(String.valueOf(proyecto.getId()), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "*") 
     @DeleteMapping(path="/delete/{id}")
     public ResponseEntity<HttpStatus> deleteEducacion(@PathVariable("id") int id) {
     try {
@@ -60,9 +59,11 @@ public class ProyectoController {
     }
   }
 
+  @CrossOrigin(origins = "*") 
   @PutMapping("/update/{id}")
-  Proyecto replaceProyecto(@RequestBody Proyecto newProyecto, @PathVariable int id) {
-      return proyectoRepository.findById(id)
+  ResponseEntity<String> replaceProyecto(@RequestBody Proyecto newProyecto, @PathVariable int id) {
+       proyectoRepository.findById(id)
+
           .map(proyecto -> {
             proyecto.setTitulo(newProyecto.getTitulo());
             proyecto.setDescripcion(newProyecto.getDescripcion());
@@ -71,17 +72,15 @@ public class ProyectoController {
             proyecto.setLink(newProyecto.getLink());
             proyecto.setFoto(newProyecto.getFoto());
 
-              return proyectoRepository.save(proyecto);
+              return new ResponseEntity<String>("", HttpStatus.OK);
               })
               .orElseGet(() -> {
-                  newProyecto.setId(id);
-                      return
-                      proyectoRepository.save(newProyecto);
-              
-          });
-
-          
-  }
+                return new ResponseEntity<String>("Error al actualizar proyectos", HttpStatus.INTERNAL_SERVER_ERROR);
+            });
+    
+            return new ResponseEntity<String>("", HttpStatus.OK);
+            
+            }     
 
     
 }
