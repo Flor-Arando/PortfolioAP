@@ -17,7 +17,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
 
   constructor(private http: HttpClient) {
     // Todos los atributos deben inicializarse
-    this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
+    this.seccion = "experiencia"; // inicio, sobre_mi, educacion, portfolio, 
     this.persona = {};
     this.skills = [];
     this.proyecto = [];
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
       this.cargarSkills();
       this.cargarProyecto();
       this.cargarEducacion();
-      this.cargarExperiencia();
+      this.cargarExperiencia();    
   }
 
   /////////////////////////////////////////// Metodos propios
@@ -133,4 +133,16 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   agregarSkill(skill : any) {
     this.skills.push(skill);
   }
+
+  agregarExperiencia(experiencia : any) {
+    this.experiencia.push(experiencia);
+  }
+
+  borrarExperiencia(id : number) {
+    this.experiencia = this.experiencia.filter(function(value, index, arr) { 
+      return value.id != id;
+    });
+  }
+
+  
 }

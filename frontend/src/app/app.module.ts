@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { SkillCirculoComponent } from './skill-circulo/skill-circulo.component';
 import { FormsModule } from '@angular/forms';
 import { InicioComponent } from './inicio/inicio.component';
-import { SobreMiComponent } from './sobre-mi/sobre-mi.component'; // <-- NgModel lives here
+import { SobreMiComponent } from './sobre-mi/sobre-mi.component';
+import { ExperienciaComponent } from './experiencia/experiencia.component'; // <-- NgModel lives here
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { SobreMiComponent } from './sobre-mi/sobre-mi.component'; // <-- NgModel
     SkillCirculoComponent,
     InicioComponent,
     SobreMiComponent,
+    ExperienciaComponent,
     
   ],
   imports: [
