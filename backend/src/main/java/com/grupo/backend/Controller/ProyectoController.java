@@ -33,18 +33,16 @@ public class ProyectoController {
     @CrossOrigin(origins = "*")
     @PostMapping(path="/add")
     public @ResponseBody ResponseEntity<String> addProyecto(@RequestBody Proyecto newProyecto) {
-    // @ResponseBody means the returned String is the response, not a view name
-    // @RequestParam means it is a parameter from the GET or POST request
-
+    
         Proyecto proyecto = new Proyecto();
         proyecto.setTitulo(newProyecto.getTitulo());
         proyecto.setDescripcion(newProyecto.getDescripcion());
-		proyecto.setDesde(newProyecto.getDesde());
+		    proyecto.setDesde(newProyecto.getDesde());
         proyecto.setHasta(newProyecto.getHasta());
-		proyecto.setLink(newProyecto.getLink());
+		    proyecto.setLink(newProyecto.getLink());
         proyecto.setFoto(newProyecto.getFoto());
         proyecto = proyectoRepository.save(proyecto);
-        proyecto = proyectoRepository.getProyectoByNombre(newProyecto.getTitulo());
+        proyecto = proyectoRepository.getProyectoByDatos(newProyecto.getTitulo(), newProyecto.getDescripcion(), newProyecto.getDesde(), newProyecto.getHasta(), newProyecto.getLink(), newProyecto.getFoto());
 
 
         return new ResponseEntity<>(String.valueOf(proyecto.getId()), HttpStatus.CREATED);
