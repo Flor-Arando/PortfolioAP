@@ -32,6 +32,12 @@ public class SkillController {
     @CrossOrigin(origins = "*")
     @PostMapping(path="/add")
     public @ResponseBody ResponseEntity<String> addSkill (@RequestBody Skill newSkill) {
+        String error = this.validarSkill(newSkill);
+
+        if (error !=null) {
+            return new ResponseEntity<String>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
         Skill skill = new Skill();
         skill.setNombre(newSkill.getNombre());
         skill.setNivel(newSkill.getNivel());
@@ -55,6 +61,12 @@ public class SkillController {
     @CrossOrigin(origins = "*")
     @PutMapping("/update/{id}")
     ResponseEntity<String> updateSkill(@RequestBody Skill newSkill, @PathVariable int id) {
+        String error = this.validarSkill(newSkill);
+
+        if (error !=null) {
+            return new ResponseEntity<String>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         skillRepository.findById(id)
         .map(skill -> {
             skill.setNombre(newSkill.getNombre());
@@ -68,4 +80,27 @@ public class SkillController {
 
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
+
+    private String validarSkill(Skill newSkill) {
+        String mensajeError = null;
+
+        if (newSkill.getNivel() < 1) {
+            return mensajeError = "El nivel tiene que ser mayor a 0";
+        }
+        if (newSkill.getNivel() > 100) {
+            return mensajeError = "El nivel tiene que ser menor a 100";
+        }
+
+        
+        if (newSkill.getNombre().length() > 30 ) {
+            return mensajeError = "Nombre excede la longitud permitida";
+        }
+
+        if (newSkill.getNombre().length() == 0 ) {
+            return mensajeError = "Nombre no puede estar vacío";
+        }
+
+        return mensajeError; 
+
+        }
 }

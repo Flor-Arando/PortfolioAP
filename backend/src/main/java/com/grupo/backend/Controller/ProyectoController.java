@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.grupo.backend.Model.Proyecto;
 import com.grupo.backend.Repository.ProyectoRepository;
 
@@ -33,7 +34,12 @@ public class ProyectoController {
     @CrossOrigin(origins = "*")
     @PostMapping(path="/add")
     public @ResponseBody ResponseEntity<String> addProyecto(@RequestBody Proyecto newProyecto) {
-    
+      String error = this.validarProyecto(newProyecto);
+
+        if (error !=null) {
+            return new ResponseEntity<String>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         Proyecto proyecto = new Proyecto();
         proyecto.setTitulo(newProyecto.getTitulo());
         proyecto.setDescripcion(newProyecto.getDescripcion());
@@ -62,6 +68,12 @@ public class ProyectoController {
   @CrossOrigin(origins = "*") 
   @PutMapping("/update/{id}")
   ResponseEntity<String> replaceProyecto(@RequestBody Proyecto newProyecto, @PathVariable int id) {
+    String error = this.validarProyecto(newProyecto);
+
+        if (error !=null) {
+            return new ResponseEntity<String>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
        proyectoRepository.findById(id)
 
           .map(proyecto -> {
@@ -80,8 +92,40 @@ public class ProyectoController {
     
             return new ResponseEntity<String>("", HttpStatus.OK);
             
-            }     
+            }
+            
+            private String validarProyecto(Proyecto newProyecto) {
+              String mensajeError = null;
 
+              if (newProyecto.getTitulo().length() > 50 ) {
+                return mensajeError = "Agregar título del proyecto con menos caracteres";
+              }
+              
+              if (newProyecto.getTitulo().length() == 0 ) {
+                return mensajeError = "El título no puede estar vacío";
+              }
+        
+              if (newProyecto.getDescripcion().length() > 250) {
+                return mensajeError = "La descripción alcanzó la cantidad máxima de 250 caracteres";
+              }   
+        
+              if (newProyecto.getDescripcion().length() == 0 ) {
+                return mensajeError = "La descripción no puede estar vacía";
+              }
+        
+              if (newProyecto.getDesde().length() == 0 ) {
+                return mensajeError = "Desde no puede estar vacío";
+              }
+        
+              if (newProyecto.getHasta().compareTo(newProyecto.getDesde()) < 0) {
+                return mensajeError = "Desde tiene que ser anterior a \"hasta\"";
+              }
+
+              return mensajeError;
+        }    
+
+
+// no estoy usando funcion numeros para titulo porque el nombre del curso puede agregarse en el titulo por ej 4.0
     
 }
 

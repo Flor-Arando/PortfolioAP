@@ -35,6 +35,7 @@ export class SobreMiComponent {
   guardarSobreMi(persona : any) {
     this.http.put("http://localhost:8080/persona/update", persona).subscribe(
       respuesta => {
+        this.error = "";
         this.cerrarModalEvent.emit("modal_sobremi");
         this.mostrarModalEvent.emit("modal_ok");
       },
