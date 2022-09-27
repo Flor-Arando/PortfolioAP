@@ -1,19 +1,26 @@
 <div id="fondo_modal" style="background-color: rgba(0, 0, 0, 0.4); min-width: 100%; min-height: 100%; position: absolute; z-index: 100; visibility: hidden;"></div>
 
+<!--
 <header id="header" class="fixed-top">
     <div class="container-fluid d-flex justify-content-between align-items-center">
   
      <a href="index.html" class="logo"><img src="assets/img/Logo.png" alt="" class="img-fluid"></a>
   
-      <nav id="navbar" class="navbar order-last order-lg-0">
-        <ul>
-            <li><a (click)="cambiarSeccion('inicio')">Inicio</a></li>
-            <li><a (click)="cambiarSeccion('sobre_mi')">Sobre mi</a></li>
-            <li><a (click)="cambiarSeccion('educacion')">Educación</a></li>
-            <li><a (click)="cambiarSeccion('portfolio')">Proyectos</a></li>
-            <li><a (click)="cambiarSeccion('experiencia')">Experiencia</a></li>
+      <nav qqqqqqqqid="navbar" class="navbar order-last order-lg-0">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list mobile-nav-toggle"></i>
+          </button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a (click)="cambiarSeccion('inicio')">Inicio</a></li>
+            <li class="nav-item"><a (click)="cambiarSeccion('sobre_mi')">Sobre mi</a></li>
+            <li class="nav-item"><a (click)="cambiarSeccion('educacion')">Educación</a></li>
+            <li class="nav-item"><a (click)="cambiarSeccion('portfolio')">Proyectos</a></li>
+            <li class="nav-item"><a (click)="cambiarSeccion('experiencia')">Experiencia</a></li>
         </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
+      </div>
+        </div>
       </nav>
   
       <div class="header-social-links">
@@ -24,7 +31,32 @@
       </div>
     </div>
   </header>
-  
+-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">
+      <img src="assets/img/Logo.png" alt="" width="200" hheight="24">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a (click)="cambiarSeccion('inicio')" class="nav-item">Inicio</a>
+        <a (click)="cambiarSeccion('sobre_mi')" class="nav-item">Sobre mi</a>
+        <a (click)="cambiarSeccion('educacion')" class="nav-item">Educación</a>
+        <a (click)="cambiarSeccion('portfolio')" class="nav-item">Proyectos</a>
+        <a (click)="cambiarSeccion('experiencia')" class="nav-item">Experiencia</a>
+
+        <a href="https://www.facebook.com/queondachusma" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.youtube.com/channel/UC9iH8YLkfE2u-XSqsnvv-SA/channels" class="youtube"><i class="bi bi-youtube"></i></a>
+        <a href="https://github.com/Flor-Arando" class="github"><i class="bi bi-github"></i></a>
+        <a href="https://ar.linkedin.com/in/florencia-arando-942b3017a" class="linkedin"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <app-inicio
   *ngIf="seccion == 'inicio'"
   [persona]="persona"
