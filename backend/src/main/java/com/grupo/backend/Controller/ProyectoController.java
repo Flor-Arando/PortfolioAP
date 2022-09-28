@@ -1,5 +1,5 @@
 package com.grupo.backend.Controller;
-
+import com.grupo.backend.Funciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,118 +14,120 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.grupo.backend.Model.Proyecto;
 import com.grupo.backend.Repository.ProyectoRepository;
 
 @Controller
-@RequestMapping(path="/proyecto")
+@RequestMapping(path = "/proyecto")
 public class ProyectoController {
-    @Autowired
-    private ProyectoRepository proyectoRepository;
+  @Autowired
+  private ProyectoRepository proyectoRepository;
 
+  @CrossOrigin(origins = "*")
+  @GetMapping(path = "/list")
+  public @ResponseBody Iterable<Proyecto> getProyectos() {
+    return this.proyectoRepository.findAll();
+  }
 
-    @CrossOrigin(origins = "*")
-    @GetMapping(path="/list")
-    public @ResponseBody Iterable<Proyecto> getProyectos() {
-        return this.proyectoRepository.findAll();
+  @CrossOrigin(origins = "*")
+  @PostMapping(path = "/add")
+  public @ResponseBody ResponseEntity<String> addProyecto(@RequestBody Proyecto newProyecto) {
+    String error = this.validar(newProyecto);
+
+    if (error != null) {
+      return new ResponseEntity<String>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @CrossOrigin(origins = "*")
-    @PostMapping(path="/add")
-    public @ResponseBody ResponseEntity<String> addProyecto(@RequestBody Proyecto newProyecto) {
-      String error = this.validarProyecto(newProyecto);
+    Proyecto proyecto = new Proyecto();
+    proyecto.setTitulo(newProyecto.getTitulo());
+    proyecto.setDescripcion(newProyecto.getDescripcion());
+    proyecto.setDesde(newProyecto.getDesde());
+    proyecto.setHasta(newProyecto.getHasta());
+    proyecto.setLink(newProyecto.getLink());
+    proyecto.setFoto(newProyecto.getFoto());
+    proyecto = proyectoRepository.save(proyecto);
+    proyecto = proyectoRepository.getProyectoByDatos(newProyecto.getTitulo(), newProyecto.getDescripcion(),
+        newProyecto.getDesde(), newProyecto.getHasta(), newProyecto.getLink(), newProyecto.getFoto());
 
-        if (error !=null) {
-            return new ResponseEntity<String>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    return new ResponseEntity<>(String.valueOf(proyecto.getId()), HttpStatus.CREATED);
+  }
 
-        Proyecto proyecto = new Proyecto();
-        proyecto.setTitulo(newProyecto.getTitulo());
-        proyecto.setDescripcion(newProyecto.getDescripcion());
-		    proyecto.setDesde(newProyecto.getDesde());
-        proyecto.setHasta(newProyecto.getHasta());
-		    proyecto.setLink(newProyecto.getLink());
-        proyecto.setFoto(newProyecto.getFoto());
-        proyecto = proyectoRepository.save(proyecto);
-        proyecto = proyectoRepository.getProyectoByDatos(newProyecto.getTitulo(), newProyecto.getDescripcion(), newProyecto.getDesde(), newProyecto.getHasta(), newProyecto.getLink(), newProyecto.getFoto());
-
-
-        return new ResponseEntity<>(String.valueOf(proyecto.getId()), HttpStatus.CREATED);
-    }
-
-    @CrossOrigin(origins = "*") 
-    @DeleteMapping(path="/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteEducacion(@PathVariable("id") int id) {
+  @CrossOrigin(origins = "*")
+  @DeleteMapping(path = "/delete/{id}")
+  public ResponseEntity<HttpStatus> deleteEducacion(@PathVariable("id") int id) {
     try {
-        proyectoRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      proyectoRepository.deleteById(id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @CrossOrigin(origins = "*") 
+  @CrossOrigin(origins = "*")
   @PutMapping("/update/{id}")
   ResponseEntity<String> replaceProyecto(@RequestBody Proyecto newProyecto, @PathVariable int id) {
-    String error = this.validarProyecto(newProyecto);
+    String error = this.validar(newProyecto);
 
-        if (error !=null) {
-            return new ResponseEntity<String>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    if (error != null) {
+      return new ResponseEntity<String>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-       proyectoRepository.findById(id)
+    proyectoRepository.findById(id)
 
-          .map(proyecto -> {
-            proyecto.setTitulo(newProyecto.getTitulo());
-            proyecto.setDescripcion(newProyecto.getDescripcion());
-            proyecto.setDesde(newProyecto.getDesde());
-            proyecto.setHasta(newProyecto.getHasta());
-            proyecto.setLink(newProyecto.getLink());
-            proyecto.setFoto(newProyecto.getFoto());
+        .map(proyecto -> {
+          proyecto.setTitulo(newProyecto.getTitulo());
+          proyecto.setDescripcion(newProyecto.getDescripcion());
+          proyecto.setDesde(newProyecto.getDesde());
+          proyecto.setHasta(newProyecto.getHasta());
+          proyecto.setLink(newProyecto.getLink());
+          proyecto.setFoto(newProyecto.getFoto());
 
-              return new ResponseEntity<String>("", HttpStatus.OK);
-              })
-              .orElseGet(() -> {
-                return new ResponseEntity<String>("Error al actualizar proyectos", HttpStatus.INTERNAL_SERVER_ERROR);
-            });
-    
-            return new ResponseEntity<String>("", HttpStatus.OK);
-            
-            }
-            
-            private String validarProyecto(Proyecto newProyecto) {
-              String mensajeError = null;
+          return new ResponseEntity<String>("", HttpStatus.OK);
+        })
+        .orElseGet(() -> {
+          return new ResponseEntity<String>("Error al actualizar proyectos", HttpStatus.INTERNAL_SERVER_ERROR);
+        });
 
-              if (newProyecto.getTitulo().length() > 50 ) {
-                return mensajeError = "Agregar título del proyecto con menos caracteres";
-              }
-              
-              if (newProyecto.getTitulo().length() == 0 ) {
-                return mensajeError = "El título no puede estar vacío";
-              }
-        
-              if (newProyecto.getDescripcion().length() > 250) {
-                return mensajeError = "La descripción alcanzó la cantidad máxima de 250 caracteres";
-              }   
-        
-              if (newProyecto.getDescripcion().length() == 0 ) {
-                return mensajeError = "La descripción no puede estar vacía";
-              }
-        
-              if (newProyecto.getDesde().length() == 0 ) {
-                return mensajeError = "Desde no puede estar vacío";
-              }
-        
-              if (newProyecto.getHasta().compareTo(newProyecto.getDesde()) < 0) {
-                return mensajeError = "Desde tiene que ser anterior a \"hasta\"";
-              }
+    return new ResponseEntity<String>("", HttpStatus.OK);
 
-              return mensajeError;
-        }    
+  }
 
+  private String validar(Proyecto newProyecto) {
+    String mensajeError = null;
 
-// no estoy usando funcion numeros para titulo porque el nombre del curso puede agregarse en el titulo por ej 4.0
-    
+    if (newProyecto.getTitulo().length() > 50) {
+      return mensajeError = "Título del proyecto excede la longitud permitida";
+    }
+
+    if (newProyecto.getTitulo().length() == 0) {
+      return mensajeError = "Título no puede estar vacío";
+    }
+
+    if (newProyecto.getDescripcion().length() > 250) {
+      return mensajeError = "Descripción excede la longitud permitida";
+    }
+
+    if (newProyecto.getDescripcion().length() == 0) {
+      return mensajeError = "Descripción no puede estar vacía";
+    }
+
+    if (newProyecto.getDesde().length() == 0) {
+      return mensajeError = "Desde no puede estar vacío";
+    }
+
+    if (newProyecto.getHasta().compareTo(newProyecto.getDesde()) < 0) {
+      return mensajeError = "Desde tiene que ser anterior a \"hasta\"";
+    }
+
+    if (!Funciones.esFecha(newProyecto.getDesde())) {
+			return "Fecha inválida. Desde debe estar en el formato AAAA-MM-DD";
+		}
+
+    if (!Funciones.esFecha(newProyecto.getHasta())) {
+			return "Fecha inválida. Hasta debe estar en el formato AAAA-MM-DD";
+		}
+
+    return mensajeError;
+  }
+
 }
-
