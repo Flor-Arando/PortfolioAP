@@ -101,10 +101,6 @@ public class ExperienciaController {
             return "Empresa no puede estar vacío";
         }
 
-        if (!Funciones.tieneSoloLetras(newExperiencia.getEmpresa())) {
-			return "Empresa solo puede contener letras";
-		}
-
         if (newExperiencia.getPuesto().length() > 50) {
             return "Puesto laboral excede la longitud permitida";
         }
@@ -112,10 +108,6 @@ public class ExperienciaController {
         if (newExperiencia.getPuesto().length() == 0) {
             return "Puesto laboral no puede estar vacío";
         }
-
-        if (!Funciones.tieneSoloLetras(newExperiencia.getPuesto())) {
-			return "Puesto solo puede contener letras";
-		}
 
         if (newExperiencia.getDescripcion().length() > 250) {
             return "Descripción excede la longitud permitida";
@@ -133,7 +125,7 @@ public class ExperienciaController {
             return "Desde no puede estar vacío";
         }
 
-        if (newExperiencia.getHasta().compareTo(newExperiencia.getDesde()) < 0) { // ME GUARDA 2030
+        if (newExperiencia.getHasta().compareTo(newExperiencia.getDesde()) < 0) { 
             return "Desde tiene que ser anterior a \"hasta\"";
         }
 
