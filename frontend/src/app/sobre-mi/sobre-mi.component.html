@@ -98,7 +98,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modal_skill_label">Editar 'Skill'</h5>
+          <h5 class="modal-title" id="modal_skill_label">{{ seleccionado.id ? 'Editar' : 'Agregar' }} 'Skill'</h5>
           <button type="button" class="btn-close" (click)="cerrarModalSkill()"></button>
         </div>
         <div class="modal-body">
