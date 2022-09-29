@@ -95,35 +95,34 @@
 
 <!-- FORMULARIO SKILL ------------------------------------------->
 <div class="modal" id="modal_skill" tabindex="-1" aria-labelledby="modal_skill_label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal_skill_label">Editar 'Skill'</h5>
-        <button type="button" class="btn-close" (click)="cerrarModalSkill()"></button>
-      </div>
-      <div class="modal-body">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_skill_label">{{ seleccionado.id ? 'Editar' : 'Agregar' }} 'Skill'</h5>
+                <button type="button" class="btn-close" (click)="cerrarModalSkill()"></button>
+            </div>
+            
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                      <label for="descripcion" class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="seleccionado.nombre">
+                    </div>
+                    <div class="mb-3">
+                      <label for="fecha" class="form-label">Nivel</label>
+                      <input type="text" class="form-control" id="nivel" name="nivel" [(ngModel)]="seleccionado.nivel">
+                    </div>
+                </form>
+            </div>
 
-        <form>
-          <div class="mb-3">
-            <label for="descripcion" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="seleccionado.nombre">
-          </div>
-          <div class="mb-3">
-            <label for="fecha" class="form-label">Nivel</label>
-            <input type="text" class="form-control" id="nivel" name="nivel" [(ngModel)]="seleccionado.nivel">
-          </div>
-        </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModalSkill()">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="guardarSkill(seleccionado)" data-bs-dismiss="modal">Guardar</button>
+            </div>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="cerrarModalSkill()">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="guardarSkill(seleccionado)"
-          data-bs-dismiss="modal">Guardar</button>
-      </div>
-
-      <div *ngIf="error != ''" class="text-danger fs-4 fw-bold text-center mb-5">
-        {{ error }}
-      </div>
+            <div *ngIf="error != ''" class="text-danger fs-4 fw-bold text-center mb-5">
+                {{ error }}
+            </div>
+        </div>
     </div>
-  </div>
 </div>
