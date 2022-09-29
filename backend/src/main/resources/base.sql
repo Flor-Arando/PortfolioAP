@@ -24,7 +24,21 @@ create table persona
     primary key (id)
 );
 
-insert into persona values(1, 'flopina', '1234', 'Flor', 'Arando','Full Stack Developer Jr', 'descripcion sobre mi con años y a q me dedico', 'arandoflorenciaromina@gmail.com', 'CABA, Bs.As, Argentina', '1997-08-07', 'https://acortar.link/P4P7XW', 'https://acortar.link/P4P7XW');
+insert into persona values
+(
+    1,
+    'flopina',
+    '1234',
+    'Flor',
+    'Arando',
+    'Full Stack Developer Jr',
+    'descripcion sobre mi con años y a q me dedico',
+    'arandoflorenciaromina@gmail.com',
+    'CABA, Bs.As, Argentina',
+    '1997-08-07',
+    'https://picsum.photos/id/1062/300/240',
+    'https://via.placeholder.com/150'
+);
 
 /***********************************************************************/
 
@@ -32,24 +46,22 @@ create table skill
 (
     id int not null auto_increment,
 	nombre varchar(32) not null unique,
-	nivel int not null, /*agregar foto*/
+	nivel int not null,
 
     primary key (id)
 );
 
-insert into skill values(1, 'Inglés', 80);
-insert into skill values(2, 'Bootstrap', 60);
-insert into skill values(3, 'Angular', 70);
-insert into skill values(4, 'MySQL', 60);
-insert into skill values(5, 'Spring Boot', 60);
-insert into skill values(6, 'Git', 70);
-insert into skill values(7, 'Github', 70);
-insert into skill values(8, 'Trazabilidad Informática', 60);
-insert into skill values(9, 'Visual Estudio Code', 75);
-insert into skill values(10, 'Apache NetBeans', 70);
-insert into skill values(11, 'HTML', 70);
-insert into skill values(12, 'CSS', 60);
-insert into skill values(13, 'JAVA', 70);
+insert into skill(nombre, nivel) values('Inglés', 80);
+insert into skill(nombre, nivel) values('Bootstrap', 60);
+insert into skill(nombre, nivel) values('Angular', 70);
+insert into skill(nombre, nivel) values('MySQL', 60);
+insert into skill(nombre, nivel) values('Spring Boot', 60);
+insert into skill(nombre, nivel) values('Git', 70);
+insert into skill(nombre, nivel) values('Github', 70);
+insert into skill(nombre, nivel) values('HTML', 70);
+insert into skill(nombre, nivel) values('CSS', 60);
+insert into skill(nombre, nivel) values('JAVA', 70);
+
 /************************************************************************/
 
 create table educacion
