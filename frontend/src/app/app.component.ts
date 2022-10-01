@@ -14,10 +14,11 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   proyecto: any[] = [];
   educacion : any[] = [];
   experiencia : any[] = [];
-  
+  credenciales : any = {};
+  errorLogin : string = "";
+  token : any = null;
 
   constructor(private http: HttpClient) {
-    // Todos los atributos deben inicializarse
     this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
   }
   
@@ -57,6 +58,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.http.get<any>("http://localhost:8080/proyecto/list").subscribe(
         resultado => {
             this.proyecto = resultado;
+            this.ordenarProyecto();
         }
     );
   }
@@ -74,6 +76,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.http.get<any>("http://localhost:8080/experiencia/list").subscribe(
         resultado => {
           this.experiencia = resultado;
+          this.ordenarExperiencia();
         }
     );
   }
@@ -153,5 +156,38 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
       return a.desde > b.desde ? -1 : 1;
     });
   }
-  
+
+  ordenarProyecto() {
+    this.proyecto = this.proyecto.sort(function(a, b) {
+      // Ordena descendente
+      return a.desde > b.desde ? -1 : 1;
+    });
+  }
+
+  ordenarExperiencia() {
+    this.experiencia = this.experiencia.sort(function(a, b) {
+      // Ordena descendente
+      return a.desde > b.desde ? -1 : 1;
+    });
+  }
+
+  login() {
+    this.http.post("http://localhost:8080/login", this.credenciales).subscribe(
+      respuesta => {
+        this.errorLogin = "";
+        this.credenciales = {};
+        this.cerrarModal('modal_login');
+        this.token = respuesta;
+        console.log(this.token);
+      },
+      error => {
+        this.errorLogin = error.error.message || error.error;
+      }
+    );
+  }
+
+  logout() {
+    this.credenciales = {};
+    this.token = null;
+  }
 }

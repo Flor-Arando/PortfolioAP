@@ -1,5 +1,6 @@
 package com.grupo.backend.Repository;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.grupo.backend.Model.Persona;
@@ -8,5 +9,6 @@ import com.grupo.backend.Model.Persona;
 // CRUD refers Create, Read, Update, Delete
 
 public interface PersonaRepository extends CrudRepository<Persona, Integer> {
-
+    @Query("SELECT p FROM Persona as p WHERE usuario = ?1")
+    Persona getPersonaByUsuario(String usuario);
 }

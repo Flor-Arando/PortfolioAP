@@ -1,5 +1,9 @@
 package com.grupo.backend.Controller;
+
 import com.grupo.backend.Funciones;
+import com.grupo.backend.Model.Proyecto;
+import com.grupo.backend.Repository.ProyectoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.grupo.backend.Model.Proyecto;
-import com.grupo.backend.Repository.ProyectoRepository;
+import org.springframework.http.HttpHeaders;
 
 @Controller
 @RequestMapping(path = "/proyecto")
-public class ProyectoController {
+public class ProyectoController extends ControllerGenerico {
   @Autowired
   private ProyectoRepository proyectoRepository;
 
@@ -31,7 +34,11 @@ public class ProyectoController {
 
   @CrossOrigin(origins = "*")
   @PostMapping(path = "/add")
-  public @ResponseBody ResponseEntity<String> addProyecto(@RequestBody Proyecto newProyecto) {
+  public @ResponseBody ResponseEntity<String> addProyecto(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody Proyecto newProyecto) {
+    if (!this.tokenValido(token)) {
+			return new ResponseEntity<String>("Sin acceso", HttpStatus.UNAUTHORIZED);
+		}
+
     String error = this.validar(newProyecto);
 
     if (error != null) {
@@ -54,7 +61,11 @@ public class ProyectoController {
 
   @CrossOrigin(origins = "*")
   @DeleteMapping(path = "/delete/{id}")
-  public ResponseEntity<HttpStatus> deleteEducacion(@PathVariable("id") int id) {
+  public ResponseEntity<HttpStatus> deleteEducacion(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable("id") int id) {
+    if (!this.tokenValido(token)) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+
     try {
       proyectoRepository.deleteById(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -65,7 +76,11 @@ public class ProyectoController {
 
   @CrossOrigin(origins = "*")
   @PutMapping("/update/{id}")
-  ResponseEntity<String> replaceProyecto(@RequestBody Proyecto newProyecto, @PathVariable int id) {
+  ResponseEntity<String> replaceProyecto(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody Proyecto newProyecto, @PathVariable int id) {
+    if (!this.tokenValido(token)) {
+			return new ResponseEntity<String>("Sin acceso", HttpStatus.UNAUTHORIZED);
+		}
+
     String error = this.validar(newProyecto);
 
     if (error != null) {
@@ -73,7 +88,6 @@ public class ProyectoController {
     }
 
     proyectoRepository.findById(id)
-
         .map(proyecto -> {
           proyecto.setTitulo(newProyecto.getTitulo());
           proyecto.setDescripcion(newProyecto.getDescripcion());
@@ -81,6 +95,7 @@ public class ProyectoController {
           proyecto.setHasta(newProyecto.getHasta());
           proyecto.setLink(newProyecto.getLink());
           proyecto.setFoto(newProyecto.getFoto());
+          proyectoRepository.save(proyecto);
 
           return new ResponseEntity<String>("", HttpStatus.OK);
         })
@@ -89,34 +104,31 @@ public class ProyectoController {
         });
 
     return new ResponseEntity<String>("", HttpStatus.OK);
-
   }
 
   private String validar(Proyecto newProyecto) {
-    String mensajeError = null;
-
     if (newProyecto.getTitulo().length() > 50) {
-      return mensajeError = "Título del proyecto excede la longitud permitida";
+      return "Título del proyecto excede la longitud permitida";
     }
 
     if (newProyecto.getTitulo().length() == 0) {
-      return mensajeError = "Título no puede estar vacío";
+      return "Título no puede estar vacío";
     }
 
     if (newProyecto.getDescripcion().length() > 250) {
-      return mensajeError = "Descripción excede la longitud permitida";
+      return "Descripción excede la longitud permitida";
     }
 
     if (newProyecto.getDescripcion().length() == 0) {
-      return mensajeError = "Descripción no puede estar vacía";
+      return "Descripción no puede estar vacía";
     }
 
     if (newProyecto.getDesde().length() == 0) {
-      return mensajeError = "Desde no puede estar vacío";
+      return "Desde no puede estar vacío";
     }
 
     if (newProyecto.getHasta().compareTo(newProyecto.getDesde()) < 0) {
-      return mensajeError = "Desde tiene que ser anterior a \"hasta\"";
+      return "Desde tiene que ser anterior a \"hasta\"";
     }
 
     if (!Funciones.esFecha(newProyecto.getDesde())) {
@@ -127,7 +139,6 @@ public class ProyectoController {
 			return "Fecha inválida. Hasta debe estar en el formato AAAA-MM-DD";
 		}
 
-    return mensajeError;
+    return null;
   }
-
 }

@@ -1,7 +1,6 @@
 package com.grupo.backend;
 
 public class Funciones {
-
     public static boolean tieneSoloLetras (String texto) {
         return texto.matches("[a-zA-Z\\s']+");
     }

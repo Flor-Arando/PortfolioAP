@@ -2,7 +2,8 @@
   <div class="container" data-aos="fade-up">
 
     <div class="section-title">
-      <h2>Sobre Mi</h2> <i class="bi bi-pencil" (click)="mostrarModalSobreMi()"></i>
+      <h2>Sobre Mi</h2>
+      <i class="bi bi-pencil" *ngIf="token" (click)="mostrarModalSobreMi()"></i>
       <p>{{ persona.descripcion }}</p>
     </div>
 
@@ -32,15 +33,17 @@
   <div class="container" data-aos="fade-up">
 
     <div class="section-title">
-      <h2>Habilidades duras y blandas</h2> <i class="bi bi-plus-circle"
-        (click)="mostrarModalSkill({id:0, nombre:'', nivel:''})"></i>
+      <h2>Habilidades duras y blandas</h2>
+      <i class="bi bi-plus-circle" *ngIf="token" (click)="mostrarModalSkill({id:0, nombre:'', nivel:''})"></i>
     </div>
 
     <div class="row skills-content">
       <div class="col-3" *ngFor="let skill of skills">
-        <i class="bi bi-pencil" (click)="mostrarModalSkill(skill)"></i>
-        &nbsp;
-        <i class="bi bi-x-lg" (click)="mostrarModalBorrar(skill.id)"></i>
+        <div *ngIf="token">
+          <i class="bi bi-pencil" (click)="mostrarModalSkill(skill)"></i>
+          &nbsp;
+          <i class="bi bi-x-lg" (click)="mostrarModalBorrar(skill.id)"></i>
+        </div>
         <app-skill-circulo [nombre]="skill.nombre" [nivel]="skill.nivel"></app-skill-circulo>
       </div>
     </div>

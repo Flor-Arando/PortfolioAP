@@ -28,7 +28,7 @@ insert into persona values
 (
     1,
     'flopina',
-    '1234',
+    '$2a$13$ZO/guzmf9o5Wk9hpz5dIWe5q9U7qe2lx7UZkivLPLeV1/ZHlymGC.', /* flopita */
     'Flor',
     'Arando',
     'Full Stack Developer Jr',
@@ -94,7 +94,16 @@ create table proyecto
     primary key (id)
 );
 
-insert into proyecto values(1,'Portfolio Web', 'Desarrollo de una aplicación web full stack donde aprendi a Java, Springboot, MySQL, Angular, Git, Github y otras tecnologias que forman parte de la creación del proyecto a lo largo de su duración de 7 meses', '2022-02-01', '2022-08-31', 'www.google.com', 'https://acortar.link/6yWf7W');
+insert into proyecto values
+(
+    1,
+    'Portfolio Web',
+    'Desarrollo de una aplicación web full stack donde aprendi Java, Springboot, MySQL, Angular, Git, Github y otras tecnologias que forman parte de la creación del proyecto a lo largo de su duración de 7 meses',
+    '2022-02-01',
+    '2022-08-31',
+    'www.google.com',
+    'https://acortar.link/6yWf7W'
+);
 
 /**************************************************************************/
 

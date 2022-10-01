@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-educacion',
@@ -8,11 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EducacionComponent {
   @Input() educacion : any[] = [];
-  @Output() cambiarSeccionEvent = new EventEmitter<string>();
+  @Input() token : any;
   @Output() mostrarModalEvent = new EventEmitter<string>();
   @Output() cerrarModalEvent = new EventEmitter<string>();
   @Output() borrarEducacionEvent = new EventEmitter<number>();
   @Output() agregarEducacionEvent = new EventEmitter<any>();
+  @Output() actualizarEducacionEvent = new EventEmitter<any>();
 
   anterior : any = {};
   seleccionado : any = {};
@@ -37,7 +38,8 @@ export class EducacionComponent {
 
   mostrarModalBorrar(id : number) {
     if (window.confirm("¿Borrar?")) {
-      this.http.delete("http://localhost:8080/educacion/delete/" + id).subscribe(
+      let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
+      this.http.delete("http://localhost:8080/educacion/delete/" + id, { headers : encabezado }).subscribe(
         respuesta => {
           this.borrarEducacionEvent.emit(id);
         }
@@ -46,8 +48,9 @@ export class EducacionComponent {
   }
 
   guardarEducacion(educacion : any) {
+    let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
     let url = educacion.id > 0 ? "http://localhost:8080/educacion/update/" + educacion.id : "http://localhost:8080/educacion/add";
-    let solicitud = educacion.id > 0 ? this.http.put(url, educacion) : this.http.post(url, educacion);
+    let solicitud = educacion.id > 0 ? this.http.put(url, educacion, { headers : encabezado }) : this.http.post(url, educacion, { headers : encabezado });
 
     solicitud.subscribe(
       respuesta => {
@@ -59,6 +62,8 @@ export class EducacionComponent {
         if (educacion.id == 0) {
           educacion.id = respuesta;
           this.agregarEducacionEvent.emit(educacion);
+        } else {
+          this.actualizarEducacionEvent.emit();
         }
       },
       error => {
@@ -66,5 +71,4 @@ export class EducacionComponent {
       }
     );
   }
-
 }

@@ -2,4 +2,7 @@
     cursor: pointer;
 }
 
-
+.bi.bi-person-fill, .bi.bi-person-x-fill {
+    font-size: 2em;
+    cursor: pointer;
+}

@@ -13,23 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @Controller
-public class PersonaController {
+public class PersonaController extends ControllerGenerico {
 	@Autowired
 	private PersonaRepository personaRepository;
-
-	// @CrossOrigin(origins = "*") // o http://localhost:4200
-	// @GetMapping(path="/persona-frontend") //si anda
-	// public @ResponseBody /*Optional<*/Persona/*>*/
-	// getPersonaX(/*@RequestParam(value = "name", defaultValue = "World") String
-	// name*/) {
-	// /*Optional<*/Persona/*>*/ yo = this.personaRepository.findById(1).orElse(new
-	// Persona()); // esto lo provee springboot (o hibernate)
-	// yo.setClave("");
-	// yo.setUsuario("");
-	// return yo;
-	// }
 
 	@CrossOrigin(origins = "*")
 	@GetMapping(path = "/persona")
@@ -39,7 +29,11 @@ public class PersonaController {
 
 	@CrossOrigin(origins = "*")
 	@PutMapping(path = "/persona/update")
-	ResponseEntity<String> actualizarPersona(@RequestBody Persona newPersona) {
+	ResponseEntity<String> actualizarPersona(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody Persona newPersona) {
+		if (!this.tokenValido(token)) {
+			return new ResponseEntity<String>("Sin acceso", HttpStatus.UNAUTHORIZED);
+		}
+
 		String error = this.validar(newPersona);
 
 		if (error != null) {
@@ -57,7 +51,6 @@ public class PersonaController {
 					persona.setNacimiento(newPersona.getNacimiento());
 					persona.setFotoPerfil(newPersona.getFotoPerfil());
 					persona.setBanner(newPersona.getBanner());
-
 					personaRepository.save(persona);
 
 					return new ResponseEntity<>("", HttpStatus.OK);
@@ -128,13 +121,12 @@ public class PersonaController {
 
 		if (!Funciones.esEmail(newPersona.getCorreo())) {
 			return "E-mail inválido";
-		} // validar correo y nacimiento
+		}
 
-		if (newPersona.getDireccion().length() == 0) {
+		if (newPersona.getCorreo().length() == 0) {
 			return "E-mail no puede estar vacío";
 		}
 
 		return null;
-
 	}
 }
