@@ -1,6 +1,5 @@
 package com.grupo.backend.Model;
 
-import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -16,7 +15,7 @@ public class Persona {
     private String descripcion;
     private String correo;
     private String direccion;
-    private LocalDate nacimiento;
+    private String nacimiento;
     private String fotoPerfil;
     private String banner;
 
@@ -92,11 +91,11 @@ public class Persona {
         this.direccion = direccion;
     }
 
-    public LocalDate getNacimiento() {
+    public String getNacimiento() {
         return nacimiento;
     }
 
-    public void setNacimiento(LocalDate nacimiento) {
+    public void setNacimiento(String nacimiento) {
         this.nacimiento = nacimiento;
     }
 

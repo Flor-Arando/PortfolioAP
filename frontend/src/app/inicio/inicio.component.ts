@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-inicio',
@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class InicioComponent implements OnInit {
   @Input() persona : any = {};
+  @Input() token : any;
   @Output() cambiarSeccionEvent = new EventEmitter<string>();
   @Output() mostrarModalEvent = new EventEmitter<string>();
   @Output() cerrarModalEvent = new EventEmitter<string>();
@@ -36,7 +37,9 @@ export class InicioComponent implements OnInit {
   }
 
   guardarInicio(persona : any) {
-    this.http.put("http://localhost:8080/persona/update", persona).subscribe(
+    let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
+
+    this.http.put("http://localhost:8080/persona/update", persona, { headers : encabezado }).subscribe(
       a => {
         this.cerrarModalEvent.emit("modal_inicio");
         this.mostrarModalEvent.emit("modal_ok");

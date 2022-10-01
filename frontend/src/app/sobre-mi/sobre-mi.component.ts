@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-sobre-mi',
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class SobreMiComponent {
   @Input() persona : any = {};
   @Input() skills : any[] = [];
-  @Output() cambiarSeccionEvent = new EventEmitter<string>();
+  @Input() token : any;
   @Output() mostrarModalEvent = new EventEmitter<string>();
   @Output() cerrarModalEvent = new EventEmitter<string>();
   @Output() borrarSkillEvent = new EventEmitter<number>();
@@ -33,8 +33,11 @@ export class SobreMiComponent {
   }
 
   guardarSobreMi(persona : any) {
-    this.http.put("http://localhost:8080/persona/update", persona).subscribe(
+    let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
+    
+    this.http.put("http://localhost:8080/persona/update", persona,{ headers : encabezado }).subscribe(
       respuesta => {
+        this.error = "";
         this.cerrarModalEvent.emit("modal_sobremi");
         this.mostrarModalEvent.emit("modal_ok");
       },
@@ -58,8 +61,10 @@ export class SobreMiComponent {
   }
 
   mostrarModalBorrar(id : number) {
+    let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
+
     if (window.confirm("¿Borrar?")) {
-      this.http.delete("http://localhost:8080/skill/delete/" + id).subscribe(
+      this.http.delete("http://localhost:8080/skill/delete/" + id, { headers : encabezado }).subscribe(
         respuesta => {
           this.borrarSkillEvent.emit(id);
         }
@@ -68,9 +73,10 @@ export class SobreMiComponent {
   }
 
   guardarSkill(skill : any) {
+    let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
     let url = skill.id > 0 ? "http://localhost:8080/skill/update/" + skill.id : "http://localhost:8080/skill/add";
-    let solicitud = skill.id > 0 ? this.http.put(url, skill) : this.http.post(url, skill);
-
+    let solicitud = skill.id > 0 ? this.http.put(url, skill, { headers : encabezado }) : this.http.post(url, skill,{ headers : encabezado });
+  
     solicitud.subscribe(
       respuesta => {
         this.error = "";

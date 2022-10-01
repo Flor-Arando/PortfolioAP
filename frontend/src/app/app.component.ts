@@ -9,21 +9,17 @@ import { CommonModule } from '@angular/common'; // Para el ngFor
 })
 export class AppComponent implements OnInit { // OnInit es para ejecutar algo automaticamente despues del constructor
   seccion : string;
-  persona : any; // esto tendria que ser "object". se de deja asi mientras se cambia, porque rompe las otras secciones
-  skills : any[];
-  proyecto: any[];
-  educacion : any[];
-  experiencia : any[];
-  
+  persona : any = {};
+  skills : any[] = [];
+  proyecto: any[] = [];
+  educacion : any[] = [];
+  experiencia : any[] = [];
+  credenciales : any = {};
+  errorLogin : string = "";
+  token : any = null;
 
   constructor(private http: HttpClient) {
-    // Todos los atributos deben inicializarse
-    this.seccion = "experiencia"; // inicio, sobre_mi, educacion, portfolio, 
-    this.persona = {};
-    this.skills = [];
-    this.proyecto = [];
-    this.educacion = [];
-    this.experiencia = [];
+    this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
   }
   
   // OnInit es para ejecutar algo automaticamente despues del constructor
@@ -32,7 +28,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
       this.cargarSkills();
       this.cargarProyecto();
       this.cargarEducacion();
-      this.cargarExperiencia();    
+      this.cargarExperiencia();
   }
 
   /////////////////////////////////////////// Metodos propios
@@ -62,6 +58,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.http.get<any>("http://localhost:8080/proyecto/list").subscribe(
         resultado => {
             this.proyecto = resultado;
+            this.ordenarProyecto();
         }
     );
   }
@@ -70,6 +67,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.http.get<any>("http://localhost:8080/educacion/list").subscribe(
         resultado => {
           this.educacion = resultado;
+          this.ordenarEducacion();
         }
     );
   }
@@ -78,24 +76,8 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.http.get<any>("http://localhost:8080/experiencia/list").subscribe(
         resultado => {
           this.experiencia = resultado;
+          this.ordenarExperiencia();
         }
-    );
-  }
-
-  guardarSobreMi(persona : any) {
-    this.http.put("http://localhost:8080/persona/update", persona).subscribe(
-      a => {
-        //this.mostrarMensajeOK = true;
-      },
-      error => {
-        //this.error = error.error;
-      }
-    );
-  }
-
-  guardarExperiencia(experiencia : any) {
-    this.http.put("http://localhost:8080/experiencia/update", this.experiencia).subscribe(
-      a => {}
     );
   }
 
@@ -103,6 +85,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     let fondo = document.getElementById("fondo_modal");
     if (fondo) {
       fondo.style.visibility = "visible";
+      fondo.style.minHeight = "300%";
     }
 
     let e = document.getElementById(id);
@@ -116,14 +99,13 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     let fondo = document.getElementById("fondo_modal");
     if (fondo) {
       fondo.style.visibility = "hidden";
-    
+      fondo.style.minHeight = "100%";
     }
 
     let e = document.getElementById(id);
     if (e) {
       e.style.visibility = "hidden";
       e.style.display = "none";
-      
     }
   }
 
@@ -151,6 +133,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
 
   agregarEducacion(educacion : any) {
     this.educacion.push(educacion);
+    this.ordenarEducacion();    
   }
 
   agregarProyecto(proyecto : any) {
@@ -167,6 +150,44 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     });
   }
 
-  
-}
+  ordenarEducacion() {
+    this.educacion = this.educacion.sort(function(a, b) {
+      // Ordena descendente
+      return a.desde > b.desde ? -1 : 1;
+    });
+  }
 
+  ordenarProyecto() {
+    this.proyecto = this.proyecto.sort(function(a, b) {
+      // Ordena descendente
+      return a.desde > b.desde ? -1 : 1;
+    });
+  }
+
+  ordenarExperiencia() {
+    this.experiencia = this.experiencia.sort(function(a, b) {
+      // Ordena descendente
+      return a.desde > b.desde ? -1 : 1;
+    });
+  }
+
+  login() {
+    this.http.post("http://localhost:8080/login", this.credenciales).subscribe(
+      respuesta => {
+        this.errorLogin = "";
+        this.credenciales = {};
+        this.cerrarModal('modal_login');
+        this.token = respuesta;
+        console.log(this.token);
+      },
+      error => {
+        this.errorLogin = error.error.message || error.error;
+      }
+    );
+  }
+
+  logout() {
+    this.credenciales = {};
+    this.token = null;
+  }
+}

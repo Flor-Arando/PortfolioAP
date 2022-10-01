@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-proyectos',
@@ -8,11 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProyectosComponent {
   @Input() proyecto : any[]= [];
-  @Output() cambiarSeccionEvent = new EventEmitter<string>();
+  @Input() token : any;
   @Output() mostrarModalEvent = new EventEmitter<string>();
   @Output() cerrarModalEvent = new EventEmitter<string>();
   @Output() borrarProyectoEvent = new EventEmitter<number>();
   @Output() agregarProyectoEvent = new EventEmitter<any>();
+  @Output() actualizarProyectoEvent = new EventEmitter<any>();
 
   anterior : any = {};
   seleccionado : any = {};
@@ -39,7 +40,8 @@ export class ProyectosComponent {
 
   mostrarModalBorrar(id : number) { 
     if (window.confirm("¿Borrar?")) {
-      this.http.delete("http://localhost:8080/proyecto/delete/" + id).subscribe(
+      let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
+      this.http.delete("http://localhost:8080/proyecto/delete/" + id, { headers : encabezado }).subscribe(
         respuesta => {
           this.borrarProyectoEvent.emit(id);
         }
@@ -48,8 +50,9 @@ export class ProyectosComponent {
   }
 
   guardarProyecto(proyecto : any) {
+    let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
     let url = proyecto.id > 0 ? "http://localhost:8080/proyecto/update/" + proyecto.id : "http://localhost:8080/proyecto/add";
-    let solicitud = proyecto.id > 0 ? this.http.put(url, proyecto) : this.http.post(url, proyecto);
+    let solicitud = proyecto.id > 0 ? this.http.put(url, proyecto, { headers : encabezado }) : this.http.post(url, proyecto, { headers : encabezado });
 
     solicitud.subscribe(
       respuesta => {
@@ -61,6 +64,8 @@ export class ProyectosComponent {
         if (proyecto.id == 0) {
           proyecto.id = respuesta;
           this.agregarProyectoEvent.emit(proyecto);
+        } else {
+          this.actualizarProyectoEvent.emit();
         }
       },
       error => {

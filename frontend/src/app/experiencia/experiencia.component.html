@@ -2,17 +2,18 @@
       <div class="container" data-aos="fade-up">
         
         <div class="section-title">
-          <h2>Experiencia Laboral</h2><i class="bi bi-plus-circle" (click)="mostrarModalExperiencia({id: 0, empresa:'', puesto:'', desde:'', hasta:'', descripcion:''})"></i>
+          <h2>Experiencia Laboral</h2>
+          <i class="bi bi-plus-circle" *ngIf="token" (click)="mostrarModalExperiencia({id: 0, empresa:'', puesto:'', desde:'', hasta:'', descripcion:''})"></i>
         </div>
   
         <div class="row">
         <div class="resume-item" *ngFor="let expe of experiencia">
           <div class="col-lg-12">
             <h3 class="resume-title"></h3>
-            
+              <div *ngIf="token">
                 <i class="bi bi-pencil" (click)="mostrarModalExperiencia(expe)"></i>
-                
                 <i class="bi bi-x-lg" (click)="mostrarModalBorrar(expe.id)"></i>
+              </div>
               <h4>{{ expe.puesto }}</h4>
               <p><em>{{ expe.empresa }}</em></p>
               <h5>{{ expe.desde.substring(0, 4) }} - {{ expe.hasta.substring(0, 4) }}</h5>
