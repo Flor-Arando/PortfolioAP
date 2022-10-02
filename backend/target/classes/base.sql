@@ -1,4 +1,4 @@
-drop database if exists argprograma;
+    drop database if exists argprograma;
 
 create database argprograma;
 

@@ -35,7 +35,7 @@ export class SobreMiComponent {
   guardarSobreMi(persona : any) {
     let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
     
-    this.http.put("http://localhost:8080/persona/update", persona,{ headers : encabezado }).subscribe(
+    this.http.put("http://localhost:8080/persona/update", persona, { headers : encabezado }).subscribe(
       respuesta => {
         this.error = "";
         this.cerrarModalEvent.emit("modal_sobremi");

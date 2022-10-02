@@ -138,10 +138,12 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
 
   agregarProyecto(proyecto : any) {
     this.proyecto.push(proyecto);
+    this.ordenarProyecto();
   }
 
   agregarExperiencia(experiencia : any) {
     this.experiencia.push(experiencia);
+    this.ordenarExperiencia();
   }
 
   borrarExperiencia(id : number) {
@@ -178,7 +180,6 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
         this.credenciales = {};
         this.cerrarModal('modal_login');
         this.token = respuesta;
-        console.log(this.token);
       },
       error => {
         this.errorLogin = error.error.message || error.error;
