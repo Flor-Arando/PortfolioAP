@@ -7,3 +7,4 @@ mvnw.cmd
 frontend/.angular
 
 .vscode/settings.json
+.angular/*
