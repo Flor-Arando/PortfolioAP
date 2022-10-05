@@ -6,3 +6,4 @@ mvnw.cmd
 /target
 frontend/.angular
 
+.vscode/settings.json
