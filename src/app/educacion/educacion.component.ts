@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-educacion',
@@ -18,8 +19,11 @@ export class EducacionComponent {
   anterior : any = {};
   seleccionado : any = {};
   error : string = "";
+  api_base_url : string;
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient) {
+    this.api_base_url = environment.api_base_url;
+  }
 
   mostrarModalEducacion(educacion : any) {
     this.seleccionado = educacion;
@@ -39,7 +43,7 @@ export class EducacionComponent {
   mostrarModalBorrar(id : number) {
     if (window.confirm("¿Borrar?")) {
       let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
-      this.http.delete("http://localhost:8080/educacion/delete/" + id, { headers : encabezado }).subscribe(
+      this.http.delete(this.api_base_url + "/educacion/delete/" + id, { headers : encabezado }).subscribe(
         respuesta => {
           this.borrarEducacionEvent.emit(id);
         }
@@ -49,7 +53,7 @@ export class EducacionComponent {
 
   guardarEducacion(educacion : any) {
     let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
-    let url = educacion.id > 0 ? "http://localhost:8080/educacion/update/" + educacion.id : "http://localhost:8080/educacion/add";
+    let url = this.api_base_url + (educacion.id > 0 ? "/educacion/update/" + educacion.id : "/educacion/add");
     let solicitud = educacion.id > 0 ? this.http.put(url, educacion, { headers : encabezado }) : this.http.post(url, educacion, { headers : encabezado });
 
     solicitud.subscribe(

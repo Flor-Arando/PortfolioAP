@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-inicio',
@@ -15,8 +16,11 @@ export class InicioComponent implements OnInit {
 
   anterior : object = {};
   error : string = "";
+  api_base_url : string;
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient) {
+    this.api_base_url = environment.api_base_url;
+  }
 
   ngOnInit(): void {
   }
@@ -39,7 +43,7 @@ export class InicioComponent implements OnInit {
   guardarInicio(persona : any) {
     let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
 
-    this.http.put("http://localhost:8080/persona/update", persona, { headers : encabezado }).subscribe(
+    this.http.put(this.api_base_url + "/persona/update", persona, { headers : encabezado }).subscribe(
       a => {
         this.cerrarModalEvent.emit("modal_inicio");
         this.mostrarModalEvent.emit("modal_ok");

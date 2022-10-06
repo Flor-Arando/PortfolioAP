@@ -1,7 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // Lo trae desde la declaracion global (?)
 import { CommonModule } from '@angular/common'; // Para el ngFor
-  
+import { environment } from '../environments/environment';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,18 +18,20 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   credenciales : any = {};
   errorLogin : string = "";
   token : any = null;
+  api_base_url : string;
 
   constructor(private http: HttpClient) {
+    this.api_base_url = environment.api_base_url;
     this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
   }
   
   // OnInit es para ejecutar algo automaticamente despues del constructor
   ngOnInit() {
-      this.cargarPersona();
-      this.cargarSkills();
-      this.cargarProyecto();
-      this.cargarEducacion();
-      this.cargarExperiencia();
+    this.cargarPersona();
+    this.cargarSkills();
+    this.cargarProyecto();
+    this.cargarEducacion();
+    this.cargarExperiencia();
   }
 
   /////////////////////////////////////////// Metodos propios
@@ -38,7 +41,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   cargarPersona() {
-    this.http.get<any>("http://localhost:8080/persona").subscribe(
+    this.http.get<any>(this.api_base_url + "/persona").subscribe(
         resultado => {
           this.persona = resultado;
         }/*,
@@ -47,7 +50,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   cargarSkills() {
-    this.http.get<any>("http://localhost:8080/skill/list").subscribe(
+    this.http.get<any>(this.api_base_url + "/skill/list").subscribe(
         resultado => {
           this.skills = resultado;
         }
@@ -55,7 +58,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   cargarProyecto() {
-    this.http.get<any>("http://localhost:8080/proyecto/list").subscribe(
+    this.http.get<any>(this.api_base_url + "/proyecto/list").subscribe(
         resultado => {
             this.proyecto = resultado;
             this.ordenarProyecto();
@@ -64,7 +67,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   cargarEducacion() {
-    this.http.get<any>("http://localhost:8080/educacion/list").subscribe(
+    this.http.get<any>(this.api_base_url + "/educacion/list").subscribe(
         resultado => {
           this.educacion = resultado;
           this.ordenarEducacion();
@@ -73,7 +76,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   cargarExperiencia() {
-    this.http.get<any>("http://localhost:8080/experiencia/list").subscribe(
+    this.http.get<any>(this.api_base_url + "/experiencia/list").subscribe(
         resultado => {
           this.experiencia = resultado;
           this.ordenarExperiencia();
@@ -174,7 +177,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
   }
 
   login() {
-    this.http.post("http://localhost:8080/login", this.credenciales).subscribe(
+    this.http.post(this.api_base_url + "/login", this.credenciales).subscribe(
       respuesta => {
         this.errorLogin = "";
         this.credenciales = {};

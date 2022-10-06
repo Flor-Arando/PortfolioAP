@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-sobre-mi',
@@ -18,8 +19,11 @@ export class SobreMiComponent {
   anterior : any = {};
   seleccionado : any = {};
   error : string = "";
+  api_base_url : string;
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient) {
+    this.api_base_url = environment.api_base_url;
+  }
 
   mostrarModalSobreMi() {
     this.anterior = structuredClone(this.persona);
@@ -35,7 +39,7 @@ export class SobreMiComponent {
   guardarSobreMi(persona : any) {
     let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
     
-    this.http.put("http://localhost:8080/persona/update", persona, { headers : encabezado }).subscribe(
+    this.http.put(this.api_base_url + "/persona/update", persona, { headers : encabezado }).subscribe(
       respuesta => {
         this.error = "";
         this.cerrarModalEvent.emit("modal_sobremi");
@@ -64,7 +68,7 @@ export class SobreMiComponent {
     let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
 
     if (window.confirm("¿Borrar?")) {
-      this.http.delete("http://localhost:8080/skill/delete/" + id, { headers : encabezado }).subscribe(
+      this.http.delete(this.api_base_url + "/skill/delete/" + id, { headers : encabezado }).subscribe(
         respuesta => {
           this.borrarSkillEvent.emit(id);
         }
@@ -74,7 +78,7 @@ export class SobreMiComponent {
 
   guardarSkill(skill : any) {
     let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
-    let url = skill.id > 0 ? "http://localhost:8080/skill/update/" + skill.id : "http://localhost:8080/skill/add";
+    let url = this.api_base_url + (skill.id > 0 ? "/skill/update/" + skill.id : "/skill/add");
     let solicitud = skill.id > 0 ? this.http.put(url, skill, { headers : encabezado }) : this.http.post(url, skill,{ headers : encabezado });
   
     solicitud.subscribe(
@@ -94,5 +98,4 @@ export class SobreMiComponent {
       }
     );
   }
-
 }
