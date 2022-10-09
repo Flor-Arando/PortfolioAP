@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
-import { HttpClient } from '@angular/common/http'; // Lo trae desde la declaracion global (?)
-import { CommonModule } from '@angular/common'; // Para el ngFor
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { environment } from '../environments/environment';
 
 @Component({
@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit { // OnInit es para ejecutar algo automaticamente despues del constructor
+export class AppComponent implements OnInit {
   seccion : string;
   persona : any = {};
   skills : any[] = [];
@@ -25,7 +25,6 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.seccion = "inicio"; // inicio, sobre_mi, educacion, portfolio, 
   }
   
-  // OnInit es para ejecutar algo automaticamente despues del constructor
   ngOnInit() {
     this.cargarPersona();
     this.cargarSkills();
@@ -33,8 +32,6 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.cargarEducacion();
     this.cargarExperiencia();
   }
-
-  /////////////////////////////////////////// Metodos propios
 
   cambiarSeccion(seccion : string) {
     this.seccion = seccion;
@@ -44,8 +41,7 @@ export class AppComponent implements OnInit { // OnInit es para ejecutar algo au
     this.http.get<any>(this.api_base_url + "/persona").subscribe(
         resultado => {
           this.persona = resultado;
-        }/*,
-        error => this.error = error*/
+        }
       )  
   }
 

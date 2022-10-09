@@ -57,8 +57,12 @@
 
             <hr>
 
-            <a *ngIf="!token" style="display: inline;" class="nav-item" (click)="mostrarModal('modal_login')"><i class="bi bi-person-fill ms-0"></i> Login</a>
-            <a *ngIf="token" style="display: inline;" class="nav-item" (click)="logout()"><i class="bi bi-person-x-fill ms-0"></i> Logout</a>
+            <a *ngIf="!token" style="display: inline;" class="nav-item" (click)="mostrarModal('modal_login')" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
+              <i class="bi bi-person-fill ms-0"></i> Login
+            </a>
+            <a *ngIf="token" style="display: inline;" class="nav-item" (click)="logout()" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">
+              <i class="bi bi-person-x-fill ms-0"></i> Logout
+            </a>
           </div>
         </div>
       </div>
