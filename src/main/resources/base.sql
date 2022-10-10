@@ -19,7 +19,10 @@ create table persona
     direccion varchar (100) not null,
     nacimiento date not null, 
     foto_perfil varchar(100) not null,
-    banner varchar(255) not null, 
+    banner varchar(255) not null,
+    orden_nacimiento int not null,
+    orden_direccion int not null,
+    orden_correo int not null,
 
     primary key (id)
 );
@@ -37,7 +40,10 @@ insert into persona values
     'CABA, Bs.As, Argentina',
     '1997-08-07',
     'https://picsum.photos/id/1062/300/240',
-    'https://via.placeholder.com/150'
+    'https://via.placeholder.com/150',
+    0,
+    1,
+    2
 );
 
 /***********************************************************************/

@@ -51,6 +51,9 @@ public class PersonaController extends ControllerGenerico {
 					persona.setNacimiento(newPersona.getNacimiento());
 					persona.setFotoPerfil(newPersona.getFotoPerfil());
 					persona.setBanner(newPersona.getBanner());
+					persona.setOrdenNacimiento(newPersona.getOrdenNacimiento());
+					persona.setOrdenDireccion(newPersona.getOrdenDireccion());
+					persona.setOrdenCorreo(newPersona.getOrdenCorreo());
 					personaRepository.save(persona);
 
 					return new ResponseEntity<>("", HttpStatus.OK);

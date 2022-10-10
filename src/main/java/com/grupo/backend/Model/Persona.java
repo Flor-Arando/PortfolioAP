@@ -18,6 +18,9 @@ public class Persona {
     private String nacimiento;
     private String fotoPerfil;
     private String banner;
+    private int ordenNacimiento;
+    private int ordenDireccion;
+    private int ordenCorreo;
 
     public int getId() {
         return id;
@@ -113,5 +116,29 @@ public class Persona {
 
     public void setBanner(String banner) {
         this.banner = banner;
+    }
+
+    public int getOrdenNacimiento() {
+        return ordenNacimiento;
+    }
+
+    public void setOrdenNacimiento(int ordenNacimiento) {
+        this.ordenNacimiento = ordenNacimiento;
+    }
+
+    public int getOrdenDireccion() {
+        return ordenDireccion;
+    }
+
+    public void setOrdenDireccion(int ordenDireccion) {
+        this.ordenDireccion = ordenDireccion;
+    }
+
+    public int getOrdenCorreo() {
+        return ordenCorreo;
+    }
+
+    public void setOrdenCorreo(int ordenCorreo) {
+        this.ordenCorreo = ordenCorreo;
     }
 }
