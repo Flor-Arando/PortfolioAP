@@ -2,3 +2,15 @@
     cursor: pointer;
     font-size: 2em;
 }
+
+.section-title {
+    margin-top: 1em;
+}
+
+.skills {
+    margin-top : 0;
+}
+
+.card {
+    cursor: pointer;
+}
