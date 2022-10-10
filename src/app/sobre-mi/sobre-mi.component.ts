@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter,  OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-sobre-mi',
@@ -20,9 +21,18 @@ export class SobreMiComponent {
   seleccionado : any = {};
   error : string = "";
   api_base_url : string;
+  orden : any;
 
   constructor(private http : HttpClient) {
     this.api_base_url = environment.api_base_url;
+  }
+
+  ngOnInit() {
+    this.orden = {
+      nacimiento: this.persona.ordenNacimiento,
+      direccion: this.persona.ordenDireccion,
+      correo: this.persona.ordenCorreo
+    };
   }
 
   mostrarModalSobreMi() {
@@ -95,6 +105,38 @@ export class SobreMiComponent {
       },
       error => {
         this.error = error.error.message || error.error;
+      }
+    );
+  }
+
+  drop(event : any) {
+    // Se mueve hacia abajo
+    if (event.currentIndex > event.previousIndex) {
+      for (const item in this.orden) {
+        if (this.orden[item] == event.previousIndex) {
+          this.orden[item] = event.currentIndex;
+        } else if (this.orden[item] <= event.currentIndex) {
+          this.orden[item] -= 1;
+        }
+      }
+    } else if (event.currentIndex < event.previousIndex) { // Se mueve hacia arriba
+      for (const item in this.orden) {
+        if (this.orden[item] == event.previousIndex) {
+          this.orden[item] = event.currentIndex;
+        } else if (this.orden[item] >= event.currentIndex) {
+          this.orden[item] += 1;
+        }
+      }
+    }
+
+    this.persona.ordenNacimiento = this.orden.nacimiento;
+    this.persona.ordenDireccion = this.orden.direccion;
+    this.persona.ordenCorreo = this.orden.correo;
+
+    let encabezado = new HttpHeaders().set('AUTHORIZATION', this.token);
+    
+    this.http.put(this.api_base_url + "/persona/update", this.persona, { headers : encabezado }).subscribe(
+      respuesta => {
       }
     );
   }

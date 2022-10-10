@@ -14,12 +14,31 @@
       <div class="col-lg-8 pt-4 pt-lg-0 content">
         <div class="row">
           <div class="col-lg-8">
-            <ul>
-              <li><i class="bi bi-rounded-right"></i> <strong>Fecha de Nacimiento: </strong> {{ persona.nacimiento }}
-              </li>
-              <li><i class="bi bi-rounded-right"></i> <strong>Dirección: </strong>{{ persona.direccion }}</li>
-              <li><i class="bi bi-rounded-right"></i> <strong>Correo Electrónico: </strong>{{ persona.correo }}</li>
-            </ul>
+
+            <div cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="token == null">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12 order-{{ persona.ordenNacimiento }}" cdkDrag>
+                    <div [ngClass]="token != null ? 'card text-white bg-danger' : ''">
+                      <div class="card-body text-nowrap"><strong>Fecha de Nacimiento: </strong> {{ persona.nacimiento }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 order-{{ persona.ordenDireccion }}" cdkDrag>
+                    <div [ngClass]="token != null ? 'card text-white bg-success' : ''">
+                      <div class="card-body text-nowrap"><strong>Dirección: </strong>{{ persona.direccion }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 order-{{ persona.ordenCorreo }}" cdkDrag>
+                    <div [ngClass]="token != null ? 'card text-white bg-primary' : ''">
+                      <div class="card-body text-nowrap"><strong>e-mail: </strong>{{ persona.correo }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

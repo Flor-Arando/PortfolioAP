@@ -8,3 +8,4 @@ frontend/.angular
 
 .vscode/settings.json
 .angular/*
+dist/*

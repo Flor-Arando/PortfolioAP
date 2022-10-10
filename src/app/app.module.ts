@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
 import { SkillCirculoComponent } from './skill-circulo/skill-circulo.component';
@@ -24,7 +25,8 @@ import { ExperienciaComponent } from './experiencia/experiencia.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    DragDropModule
   ],
   exports : [
     SkillCirculoComponent
