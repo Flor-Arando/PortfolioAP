@@ -4,4 +4,4 @@ Para clonar el repostirorio https://github.com/Flor-Arando/PortfolioAP.git se de
 * Carpeta frontend para la rama https://github.com/Flor-Arando/PortfolioAP/tree/frontend-main
 * Carpeta backend para la rama https://github.com/Flor-Arando/PortfolioAP/tree/backend-main
 
-A continucación en cada rama backen-main y frontend-main se brinda información de las tecnologías utilizadas para este proyecto.
+A continucación en cada rama backend-main y frontend-main se brinda información de las tecnologías utilizadas para este proyecto.
